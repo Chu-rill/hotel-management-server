@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "mysql", "sqlite" based on your database
+  url      = env("DATABASE_URL")
+}
+
+model Hotel {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  address     String
+  city        String
+  country     String
+  phone       String
+  email       String
+  rating      Float?
+  rooms       Room[]
+  staff       Staff[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Review      Review[]
+}
+
+model Room {
+  id            Int             @id @default(autoincrement())
+  roomNumber    String
+  type          String // e.g., Single, Double, Suite
+  price         Float
+  status        String // e.g., Available, Booked, Maintenance
+  hotelId       Int
+  hotel         Hotel           @relation(fields: [hotelId], references: [id])
+  bookings      Booking[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Amenity       Amenity?        @relation(fields: [amenityId], references: [id])
+  amenityId     Int?
+  RoomAmenities RoomAmenities[]
+}
+
+model Customer {
+  id        Int       @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String    @unique
+  phone     String
+  address   String?
+  bookings  Booking[]
+  payments  Payment[]
+  reviews   Review[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Booking {
+  id         Int      @id @default(autoincrement())
+  checkIn    DateTime
+  checkOut   DateTime
+  status     String // e.g., Confirmed, Cancelled, Completed
+  customerId Int
+  roomId     Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+  room       Room     @relation(fields: [roomId], references: [id])
+  payment    Payment?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Payment {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  paymentDate DateTime @default(now())
+  method      String // e.g., Credit Card, Cash, Online
+  status      String // e.g., Paid, Pending, Failed
+  bookingId   Int?
+  customerId  Int
+  booking     Booking? @relation(fields: [bookingId], references: [id])
+  customer    Customer @relation(fields: [customerId], references: [id])
+}
+
+model Staff {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  role      String // e.g., Manager, Receptionist, Cleaner
+  email     String   @unique
+  phone     String
+  hotelId   Int
+  hotel     Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  rating     Int // 1 to 5
+  comment    String?
+  customerId Int
+  hotelId    Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+  hotel      Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Optional model for Amenities
+model Amenity {
+  id            Int             @id @default(autoincrement())
+  name          String
+  rooms         Room[]          @relation("RoomAmenities")
+  RoomAmenities RoomAmenities[]
+}
+
+model RoomAmenities {
+  roomId    Int
+  amenityId Int
+  room      Room    @relation(fields: [roomId], references: [id])
+  amenity   Amenity @relation(fields: [amenityId], references: [id])
+
+  @@id([roomId, amenityId])
+}
