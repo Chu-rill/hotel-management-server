@@ -7,6 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String    @id @unique @default(cuid())
+  firstName String
+  lastName  String
+  email     String    @unique
+  password  String
+  phone     String
+  role      Role      @default(CUSTOMER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Customer  Customer?
+  Staff     Staff?
+}
+
+enum Role {
+  ADMIN
+  STAFF
+  CUSTOMER
+}
+
+model Customer {
+  id        Int       @id @default(autoincrement())
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookings  Booking[]
+  payments  Payment[]
+  reviews   Review[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Staff {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hotelId   Int
+  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Hotel {
   id          Int      @id @default(autoincrement())
   name        String
@@ -29,7 +70,7 @@ model Room {
   roomNumber    String
   type          String
   price         Float
-  status        String
+  status        Satus           @default(AVAILABLE)
   hotelId       Int
   hotel         Hotel           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   bookings      Booking[]
@@ -42,18 +83,10 @@ model Room {
   @@unique([hotelId, roomNumber])
 }
 
-model Customer {
-  id        Int       @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String    @unique
-  phone     String
-  address   String?
-  bookings  Booking[]
-  payments  Payment[]
-  reviews   Review[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+enum Satus {
+  AVAILABLE
+  BOOKED
+  OCCUPIED
 }
 
 model Booking {
@@ -71,28 +104,30 @@ model Booking {
 }
 
 model Payment {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   amount      Float
-  paymentDate DateTime @default(now())
-  method      String
-  status      String
-  bookingId   Int      @unique
+  paymentDate DateTime      @default(now())
+  method      PaymentMethod @default(DEBIT_CARD)
+  status      PaymentStatus @default(PENDING)
+  bookingId   Int           @unique
   customerId  Int
-  booking     Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  booking     Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  customer    Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
 }
 
-model Staff {
-  id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String
-  role      String
-  email     String   @unique
-  phone     String
-  hotelId   Int
-  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
+  BANK_TRANSFER
+  WALLET
+  CASH
 }
 
 model Review {
