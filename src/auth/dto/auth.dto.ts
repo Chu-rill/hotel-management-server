@@ -7,6 +7,7 @@ export type SignUpDto = {
   password: string;
   phone: string;
   role?: string;
+  hotelId?: number;
 };
 
 export type LoginDto = {

@@ -20,10 +20,17 @@ export class AuthService {
       dto.phone,
       dto.role,
     );
+    let profile;
+    if (user.role == 'CUSTOMER') {
+      profile = await this.userRespository.createCustomer(user.id);
+    } else if (user.role == 'STAFF') {
+      profile = await this.userRespository.createStaff(user.id, dto.hotelId);
+    }
     return {
       statusCode: HttpStatus.CREATED,
       message: 'user signup',
       data: {
+        id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
