@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService } from './email-and-password-auth.service';
 import { LoginDto, SignUpDto } from './dto/auth.dto';
 @Controller('auth')
 export class AuthController {
@@ -18,7 +18,7 @@ export class AuthController {
     return this.authService.signup(dto);
   }
 
-  @Post()
+  @Post('/login')
   Login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }

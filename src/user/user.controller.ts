@@ -7,10 +7,11 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/user.dto';
 import { Prisma } from '@prisma/client';
+import { AuthGuard } from 'src/guard/auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -26,6 +27,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
