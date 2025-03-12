@@ -12,6 +12,14 @@ export class AuthService {
   ) {}
   async signup(dto: SignUpDto) {
     //this is use to signup a new user nad based on the role of the user it makes them a customer,staff or admin
+    let existingUser = await this.userRespository.findUserByEmail(dto.email);
+    if (existingUser) {
+      return {
+        statusCode: HttpStatus.CONFLICT,
+        message: 'email already exist',
+        data: null,
+      };
+    }
     const hassedPassword = await this.hashService.hashPassword(dto.password);
     const user = await this.userRespository.createUser(
       dto.firstName,
