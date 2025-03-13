@@ -4,6 +4,7 @@ import { AuthController } from './email-and-password-auth.controller';
 import { UserModule } from 'src/user/user.module';
 // import { HashService } from './';
 import { JwtModule } from '@nestjs/jwt';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
   controllers: [AuthController],
@@ -15,6 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '2h' },
     }),
+    DatabaseModule,
   ],
 })
 export class EmailAndPasswordAuthModule {}

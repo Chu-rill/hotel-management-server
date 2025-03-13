@@ -19,12 +19,22 @@ model User {
   updatedAt DateTime  @updatedAt
   Customer  Customer?
   Staff     Staff?
+  OTP       Otp?
 }
 
 enum Role {
   ADMIN
   STAFF
   CUSTOMER
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model Customer {

@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { EmailAndPasswordAuthModule } from './auth/email-and-password-auth/email-and-password-auth.module';
 import { OauthModule } from './auth/oauth/oauth.module';
 import { GoogleStrategy } from './auth/oauth/strategies/google.strategy';
+import { OtpModule } from './otp/otp.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { GoogleStrategy } from './auth/oauth/strategies/google.strategy';
     UserModule,
     DatabaseModule,
     OauthModule,
+    OtpModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],
