@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
+import { PrismaService } from 'src/infra/db/prisma.service';
 
 @Injectable()
 export class OtpRepository {
-  constructor(private readonly prisma: DatabaseService) {}
+  constructor(private readonly prisma: PrismaService) {}
   otpReturnObject = {
     code: true,
     email: true,
@@ -11,33 +11,27 @@ export class OtpRepository {
     createdAt: true,
   };
 
-  async createOTP(data: Prisma.OtpCreateInput) {
-    const otp = await this.prisma.otp.create({
-      data,
+  async createOTP(userId: string, code: string, expiresAt: Date) {
+    const otp = await this.prisma.otp.upsert({
+      where: { userId },
+      update: { code, expiresAt },
+      create: { userId, code, expiresAt },
+
       select: this.otpReturnObject,
     });
     return otp;
   }
 
-  async getOTPDetails(email: string) {
+  async getOTPDetails(userId: string) {
     const otp = await this.prisma.otp.findUnique({
-      where: { email },
+      where: { userId },
     });
     return otp;
   }
 
-  async updateOTP(email: string, code: number) {
-    const otp = await this.prisma.otp.update({
-      where: { email },
-      data: { code: code.toString() },
-      select: this.otpReturnObject,
-    });
-    return otp;
-  }
-
-  async deleteOTP(email: string) {
+  async deleteOTP(userId: string) {
     const otp = await this.prisma.otp.delete({
-      where: { email },
+      where: { userId },
       select: this.otpReturnObject,
     });
     return otp;
