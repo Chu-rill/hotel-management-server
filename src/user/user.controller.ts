@@ -28,9 +28,9 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.getUser(id);
   }
 
   // @Patch(':id')

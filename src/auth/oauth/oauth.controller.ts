@@ -15,6 +15,6 @@ export class OauthController {
   @Get('google/callback')
   @UseGuards(GoogleGuard)
   async googleAuthRedirect(@Req() req) {
-    return this.oauthService.validateOAuthLogin(req);
+    return this.oauthService.validateOAuthGoogleLogin(req);
   }
 }

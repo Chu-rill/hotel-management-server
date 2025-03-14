@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/infra/db/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserRepository {
@@ -19,12 +20,13 @@ export class UserRepository {
     return user;
   }
 
-  async createUserOauth(firstName, lastName, email) {
+  async createUserOauth(firstName, lastName, email, profile) {
     const user = await this.prisma.user.create({
       data: {
         firstName,
         lastName,
         email,
+        profile,
       },
     });
     return user;
@@ -60,8 +62,37 @@ export class UserRepository {
       where: {
         id,
       },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        password: true,
+        phone: true,
+        role: true,
+        isVerified: true,
+      },
     });
     return user;
+  }
+  async update(id: string, updatedUser: Prisma.UserUpdateInput) {
+    const updated = await this.prisma.user.update({
+      where: { id },
+      data: {
+        ...updatedUser,
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        password: true,
+        phone: true,
+        role: true,
+        isVerified: true,
+      },
+    });
+    return updated;
   }
   async verifyUser(email: string) {
     const user = await this.prisma.user.update({

@@ -6,19 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
 } from '@nestjs/common';
 import { AuthService } from './email-and-password-auth.service';
 import { LoginDto, OTPDto, ResendDto, SignUpDto } from './dto/auth.dto';
+import { JoiValidationPipe } from 'src/utils/schema-validation/validation.pipe';
+import { login, signup } from './email-and-password-auth.validation';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/signup')
+  @UsePipes(new JoiValidationPipe(signup))
   SignUp(@Body() dto: SignUpDto) {
     return this.authService.signup(dto);
   }
 
   @Post('/login')
+  @UsePipes(new JoiValidationPipe(login))
   Login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }

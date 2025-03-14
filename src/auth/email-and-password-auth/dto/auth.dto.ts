@@ -5,7 +5,7 @@ export type SignUpDto = {
   lastName: string;
   email: string;
   password: string;
-  phone: string;
+  phone?: string;
   role?: string;
   hotelId?: number;
 };
