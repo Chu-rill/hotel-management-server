@@ -6,6 +6,7 @@ import { UserModule } from 'src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from 'src/infra/db/database.module';
 import { OtpModule } from 'src/otp/otp.module';
+import { MailModule } from 'src/infra/mail/mail.module';
 
 @Module({
   controllers: [AuthController],
@@ -19,6 +20,7 @@ import { OtpModule } from 'src/otp/otp.module';
       signOptions: { expiresIn: '2h' },
     }),
     DatabaseModule,
+    MailModule,
   ],
 })
 export class EmailAndPasswordAuthModule {}

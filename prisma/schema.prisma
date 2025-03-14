@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id        String    @id @unique @default(cuid())
-  firstName String
-  lastName  String
-  email     String    @unique
-  password  String
-  phone     String
-  role      Role      @default(CUSTOMER)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Customer  Customer?
-  Staff     Staff?
-  OTP       Otp?
+  id         String    @id @unique @default(cuid())
+  firstName  String
+  lastName   String
+  email      String    @unique
+  password   String
+  phone      String?
+  role       Role      @default(CUSTOMER)
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Customer   Customer?
+  Staff      Staff?
+  OTP        Otp?
 }
 
 enum Role {
@@ -30,8 +31,8 @@ enum Role {
 
 model Otp {
   id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email     String   @unique
+  user      User     @relation(fields: [email], references: [email], onDelete: Cascade)
   code      String
   expiresAt DateTime
   createdAt DateTime @default(now())

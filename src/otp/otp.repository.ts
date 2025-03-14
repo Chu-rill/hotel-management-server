@@ -11,27 +11,27 @@ export class OtpRepository {
     createdAt: true,
   };
 
-  async createOTP(userId: string, code: string, expiresAt: Date) {
+  async createOTP(email: string, code: string, expiresAt: Date) {
     const otp = await this.prisma.otp.upsert({
-      where: { userId },
+      where: { email },
       update: { code, expiresAt },
-      create: { userId, code, expiresAt },
+      create: { email, code, expiresAt },
 
       select: this.otpReturnObject,
     });
     return otp;
   }
 
-  async getOTPDetails(userId: string) {
+  async getOTPDetails(email: string) {
     const otp = await this.prisma.otp.findUnique({
-      where: { userId },
+      where: { email },
     });
     return otp;
   }
 
-  async deleteOTP(userId: string) {
+  async deleteOTP(email: string) {
     const otp = await this.prisma.otp.delete({
-      where: { userId },
+      where: { email },
       select: this.otpReturnObject,
     });
     return otp;

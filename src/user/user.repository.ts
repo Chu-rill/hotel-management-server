@@ -52,4 +52,11 @@ export class UserRepository {
     });
     return user;
   }
+  async verifyUser(email: string) {
+    const user = await this.prisma.user.update({
+      where: { email },
+      data: { isVerified: true },
+    });
+    return user;
+  }
 }
