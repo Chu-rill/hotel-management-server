@@ -18,6 +18,17 @@ export class UserRepository {
     });
     return user;
   }
+
+  async createUserOauth(firstName, lastName, email) {
+    const user = await this.prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+      },
+    });
+    return user;
+  }
   async createCustomer(userId) {
     const profile = await this.prisma.customer.create({
       data: {
