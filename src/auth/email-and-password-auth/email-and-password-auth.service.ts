@@ -1,18 +1,21 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { LoginDto, SignUpDto } from './dto/auth.dto';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { LoginDto, OTPDto, ResendDto, SignUpDto } from './dto/auth.dto';
 import { UserRepository } from 'src/user/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import {
   encrypt,
   comparePassword,
 } from 'src/utils/helper-functions/encryption';
-import { first } from 'rxjs';
+import { OtpService } from 'src/otp/otp.service';
+import { MailService } from 'src/infra/mail/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userRespository: UserRepository,
     private jwt: JwtService,
+    private otp: OtpService,
+    private mailService: MailService,
   ) {}
   async signup(dto: SignUpDto) {
     //this is use to signup a new user nad based on the role of the user it makes them a customer,staff or admin
@@ -39,10 +42,19 @@ export class AuthService {
     }
     profile = await this.userRespository.createCustomer(user.id);
 
-    const login = await this.login({
-      email: dto.email,
-      password: dto.password,
-    });
+    const otp = await this.otp.generateOTP(user.email);
+
+    const data = {
+      subject: 'InnkeeperPro validation',
+      username: user.firstName,
+      OTP: otp,
+    };
+
+    await this.mailService.sendWelcomeEmail(user.email, data);
+    // const login = await this.login({
+    //   email: dto.email,
+    //   password: dto.password,
+    // });
     return {
       statusCode: HttpStatus.CREATED,
       message: 'user signup',
@@ -54,7 +66,7 @@ export class AuthService {
         phone: user.phone,
         role: user.role,
       },
-      token: login.token,
+      // token: login.token,
     };
   }
 
@@ -92,6 +104,51 @@ export class AuthService {
         firstName: user.firstName,
       },
       token: token,
+    };
+  }
+
+  async validateOTP(dto: OTPDto) {
+    const user = await this.userRespository.findUserByEmail(dto.email);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    // Validate OTP
+    await this.otp.verifyOTP(dto.email, dto.OTP);
+
+    // Mark user as verified
+    await this.userRespository.verifyUser(dto.email);
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'User verified successfully',
+      data: null,
+    };
+  }
+
+  async resendOTP(dto: ResendDto) {
+    const user = await this.userRespository.findUserByEmail(dto.email);
+    if (!user) {
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'user not found',
+        data: null,
+      };
+    }
+
+    const otp = await this.otp.generateOTP(user.email);
+
+    const data = {
+      subject: 'InnkeeperPro validation',
+      username: user.firstName,
+      OTP: otp,
+    };
+
+    await this.mailService.sendWelcomeEmail(user.email, data);
+
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: 'OTP Send',
     };
   }
 }

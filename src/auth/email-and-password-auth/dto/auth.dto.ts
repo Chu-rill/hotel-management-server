@@ -14,3 +14,11 @@ export type LoginDto = {
   email: string;
   password: string;
 };
+
+export type OTPDto = {
+  email: string;
+  OTP: string;
+};
+export type ResendDto = {
+  email: string;
+};
