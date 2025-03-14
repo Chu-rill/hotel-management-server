@@ -8,11 +8,13 @@ export class OauthController {
 
   @Get('google')
   @UseGuards(GoogleGuard)
-  async googleAuth(@Req() req) {}
+  async googleAuth(@Req() req) {
+    // This triggers the Google OAuth flow
+  }
 
   @Get('google/callback')
   @UseGuards(GoogleGuard)
   async googleAuthRedirect(@Req() req) {
-    return this.oauthService.googleLogin(req);
+    return this.oauthService.validateOAuthLogin(req);
   }
 }

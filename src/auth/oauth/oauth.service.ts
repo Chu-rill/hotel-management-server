@@ -50,7 +50,7 @@ export class OauthService {
 
     return {
       statusCode: HttpStatus.OK,
-      message: 'Google Auth Succesful',
+      message: 'Google Auth Successful',
       data: user,
       token: token,
     };
