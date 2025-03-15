@@ -3,15 +3,17 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Prisma } from '@prisma/client';
 import { AuthGuard } from 'src/guard/auth.guard';
+import { Request } from 'express';
+import { AuthRequest } from 'src/types/auth.request';
 
 @Controller('user')
 export class UserController {
@@ -33,13 +35,10 @@ export class UserController {
     return this.userService.getUser(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Delete()
+  @UseGuards(AuthGuard)
+  remove(@Req() req: AuthRequest) {
+    const userId = req.user.id;
+    return this.userService.remove(userId);
   }
 }

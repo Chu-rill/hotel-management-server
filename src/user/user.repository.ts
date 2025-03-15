@@ -67,7 +67,6 @@ export class UserRepository {
         firstName: true,
         lastName: true,
         email: true,
-        password: true,
         phone: true,
         role: true,
         isVerified: true,
