@@ -8,23 +8,12 @@ export class OauthService {
     private jwt: JwtService,
     private userRepository: UserRepository,
   ) {}
-  googleLogin(req) {
-    if (!req) {
-      return 'No user from google';
-    }
-    return {
-      message: 'User Info from Google',
-      user: req.user,
-    };
-  }
 
-  async validateOAuthLogin(req): Promise<any> {
+  async validateOAuthGoogleLogin(req): Promise<any> {
     if (!req || !req.user) {
       console.log('Google login failed:', req);
       throw new UnauthorizedException('No user from Google');
     }
-
-    console.log('Google User:', req.user);
 
     const auth = {
       email: req.user.email,
@@ -40,6 +29,7 @@ export class OauthService {
         auth.firstName,
         auth.lastName,
         auth.email,
+        auth.picture,
       );
       await this.userRepository.createCustomer(user.id);
       await this.userRepository.verifyUser(user.email);
