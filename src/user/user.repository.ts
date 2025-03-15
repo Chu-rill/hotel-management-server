@@ -100,4 +100,20 @@ export class UserRepository {
     });
     return user;
   }
+  async delete(id: string) {
+    const user = await this.prisma.user.delete({
+      where: { id },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        password: true,
+        phone: true,
+        role: true,
+        isVerified: true,
+      },
+    });
+    return user;
+  }
 }

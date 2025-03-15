@@ -35,6 +35,18 @@ export class UserService {
   // }
 
   remove(id: string) {
-    return `This action removes a #${id} user`;
+    const user = this.userRepository.delete(id);
+    if (!user) {
+      return {
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: 'User does not exist',
+        data: null,
+      };
+    }
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'User deleted successfully',
+      data: user,
+    };
   }
 }
