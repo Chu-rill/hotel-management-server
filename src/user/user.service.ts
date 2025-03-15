@@ -1,10 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dto';
 import { UserRepository } from './user.repository';
+import { CloudinaryService } from 'src/infra/cloudinary/cloudinary.service';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private cloudinaryService: CloudinaryService,
+  ) {}
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
   }
@@ -34,8 +38,8 @@ export class UserService {
   //   return `This action updates a #${id} user`;
   // }
 
-  remove(id: string) {
-    const user = this.userRepository.delete(id);
+  async remove(id: string) {
+    const user = await this.userRepository.delete(id);
     if (!user) {
       return {
         statusCode: HttpStatus.BAD_REQUEST,
@@ -48,5 +52,37 @@ export class UserService {
       message: 'User deleted successfully',
       data: user,
     };
+  }
+  async uploadProfileImage(userId: string, file: Express.Multer.File) {
+    if (!file) {
+      return {
+        status: 'error',
+        error: true,
+        statusCode: 400,
+        message: 'No file uploaded',
+      };
+    }
+    try {
+      // Upload file to Cloudinary
+      const uploadResult = await this.cloudinaryService.uploadProfiles(file);
+
+      // Update user profile with the uploaded image URL
+      const user = await this.userRepository.update(userId, {
+        profile: uploadResult.secure_url,
+      });
+
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Profile image uploaded successfully',
+        data: user,
+      };
+    } catch (error) {
+      console.error('Upload error:', error);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Error uploading profile image',
+        data: null,
+      };
+    }
   }
 }
