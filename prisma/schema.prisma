@@ -62,7 +62,7 @@ model Staff {
 
 model Hotel {
   id          Int      @id @default(autoincrement())
-  name        String
+  name        String   @unique
   description String?
   address     String
   city        String
@@ -80,7 +80,7 @@ model Hotel {
 model Room {
   id            Int             @id @default(autoincrement())
   roomNumber    String
-  type          String
+  roomtype      RoomType        @default(SINGLE)
   price         Float
   status        Satus           @default(AVAILABLE)
   hotelId       Int
@@ -93,6 +93,12 @@ model Room {
   roomAmenities RoomAmenities[]
 
   @@unique([hotelId, roomNumber])
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  SUITE
 }
 
 enum Satus {
