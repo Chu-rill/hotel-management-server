@@ -105,6 +105,7 @@ enum Satus {
   AVAILABLE
   BOOKED
   OCCUPIED
+  MAINTENANCE
 }
 
 model Booking {

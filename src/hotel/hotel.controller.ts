@@ -34,7 +34,7 @@ export class HotelController {
 
   @Get()
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(createHotelValidation))
+  // @UsePipes(new JoiValidationPipe(createHotelValidation))
   async findAll() {
     return this.hotelService.findAll();
   }

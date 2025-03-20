@@ -83,7 +83,7 @@ export class HotelService {
     return {
       statusCode: HttpStatus.OK,
       message: 'Hotels updated successfully',
-      data: null,
+      data: hotel,
     };
   }
 
