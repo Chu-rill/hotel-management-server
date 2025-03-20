@@ -9,6 +9,8 @@ import { OauthModule } from './auth/oauth/oauth.module';
 import { GoogleStrategy } from './auth/oauth/strategies/google.strategy';
 import { OtpModule } from './otp/otp.module';
 import { AdminModule } from './admin/admin.module';
+import { RoomModule } from './room/room.module';
+import { HotelModule } from './hotel/hotel.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { AdminModule } from './admin/admin.module';
     OauthModule,
     OtpModule,
     AdminModule,
+    RoomModule,
+    HotelModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],

@@ -17,23 +17,20 @@ import { AuthGuard } from 'src/guard/auth.guard';
 import { Request } from 'express';
 import { AuthRequest } from 'src/types/auth.request';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AdminGuard } from 'src/guard/admin.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async create(@Body() createUserDto: Prisma.UserCreateInput) {
-    return this.userService.create(createUserDto);
-  }
-
-  @Get('/:id')
+  @Get('/')
+  @UseGuards(AdminGuard)
   async findAll() {
     return this.userService.findAll();
   }
 
-  @UseGuards(AuthGuard)
   @Get()
+  @UseGuards(AuthGuard)
   async findOne(@Req() req: AuthRequest) {
     const id = req.user.id;
     return this.userService.getUser(id);
