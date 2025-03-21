@@ -109,17 +109,22 @@ enum Satus {
 }
 
 model Booking {
-  id         Int      @id @default(autoincrement())
+  id         Int           @id @default(autoincrement())
   checkIn    DateTime
   checkOut   DateTime
-  status     String
+  status     BookingStatus
+  customer   Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId Int
+  room       Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId     Int
-  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  room       Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   payment    Payment?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+enum BookingStatus {
+  VALID
+  EXPIRED
 }
 
 model Payment {

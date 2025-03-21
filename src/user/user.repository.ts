@@ -49,6 +49,12 @@ export class UserRepository {
     });
     return profile;
   }
+
+  async findUsers() {
+    const users = await this.prisma.user.findMany();
+    return users;
+  }
+
   async findUserByEmail(email: string) {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -57,6 +63,7 @@ export class UserRepository {
     });
     return user;
   }
+
   async findUserById(id: string) {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -70,10 +77,16 @@ export class UserRepository {
         phone: true,
         role: true,
         isVerified: true,
+        Customer: {
+          select: {
+            id: true, // Select the customerId
+          },
+        },
       },
     });
     return user;
   }
+
   async update(id: string, updatedUser: Prisma.UserUpdateInput) {
     const updated = await this.prisma.user.update({
       where: { id },
@@ -94,6 +107,7 @@ export class UserRepository {
     });
     return updated;
   }
+
   async verifyUser(email: string) {
     const user = await this.prisma.user.update({
       where: { email },
@@ -101,6 +115,7 @@ export class UserRepository {
     });
     return user;
   }
+
   async delete(id: string) {
     const user = await this.prisma.user.delete({
       where: { id },

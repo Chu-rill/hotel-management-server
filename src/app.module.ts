@@ -11,6 +11,7 @@ import { OtpModule } from './otp/otp.module';
 import { AdminModule } from './admin/admin.module';
 import { RoomModule } from './room/room.module';
 import { HotelModule } from './hotel/hotel.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { HotelModule } from './hotel/hotel.module';
     AdminModule,
     RoomModule,
     HotelModule,
+    BookingModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],

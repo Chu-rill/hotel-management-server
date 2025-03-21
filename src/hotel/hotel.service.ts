@@ -41,10 +41,10 @@ export class HotelService {
 
   async findAll() {
     const hotels = await this.hotelRepository.findHotels();
-    if (!hotels) {
+    if (!hotels || hotels.length === 0) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find hotels',
+        message: 'No hotels found',
         data: null,
       };
     }
