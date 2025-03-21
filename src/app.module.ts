@@ -12,6 +12,7 @@ import { AdminModule } from './admin/admin.module';
 import { RoomModule } from './room/room.module';
 import { HotelModule } from './hotel/hotel.module';
 import { BookingModule } from './booking/booking.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { BookingModule } from './booking/booking.module';
     RoomModule,
     HotelModule,
     BookingModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],
