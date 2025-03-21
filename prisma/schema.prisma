@@ -158,10 +158,10 @@ model Review {
   id         Int      @id @default(autoincrement())
   rating     Int
   comment    String?
-  customerId Int
-  hotelId    Int
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId Int
   hotel      Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId    Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
