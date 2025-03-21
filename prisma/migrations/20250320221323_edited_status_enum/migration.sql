@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "Satus" ADD VALUE 'MAINTENANCE';
