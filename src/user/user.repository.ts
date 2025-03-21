@@ -1,12 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/infra/db/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, Role } from '@prisma/client';
 
 @Injectable()
 export class UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createUser(firstName, lastName, email, password, phone, role) {
+  async createUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    phone: string,
+    role: Role,
+  ) {
     const user = await this.prisma.user.create({
       data: {
         firstName,
@@ -20,7 +27,12 @@ export class UserRepository {
     return user;
   }
 
-  async createUserOauth(firstName, lastName, email, profile) {
+  async createUserOauth(
+    firstName: string,
+    lastName: string,
+    email: string,
+    profile: string,
+  ) {
     const user = await this.prisma.user.create({
       data: {
         firstName,
@@ -31,7 +43,7 @@ export class UserRepository {
     });
     return user;
   }
-  async createCustomer(userId) {
+  async createCustomer(userId: string) {
     const profile = await this.prisma.customer.create({
       data: {
         userId: userId,
@@ -40,7 +52,7 @@ export class UserRepository {
     return profile;
   }
 
-  async createStaff(userId, hotelId) {
+  async createStaff(userId: string, hotelId: number) {
     const profile = await this.prisma.staff.create({
       data: {
         userId: userId,

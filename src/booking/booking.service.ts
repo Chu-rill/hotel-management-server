@@ -8,11 +8,11 @@ export class BookingService {
 
   async create(createDto: Prisma.BookingCreateInput) {
     const booking = await this.bookingRepository.createBooking(
-      createDto.checkIn,
-      createDto.checkOut,
+      new Date(createDto.checkIn),
+      new Date(createDto.checkOut),
       createDto.status,
-      createDto.customer,
-      createDto.room,
+      createDto.customer.connect?.id,
+      createDto.room.connect?.id,
     );
 
     if (!booking) {

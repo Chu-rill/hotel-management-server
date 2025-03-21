@@ -5,7 +5,12 @@ import { PrismaService } from 'src/infra/db/prisma.service';
 export class ReviewRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createReview(rating, comment, customerId, hotelId) {
+  async createReview(
+    rating: number,
+    comment: string,
+    customerId: number,
+    hotelId: number,
+  ) {
     const review = await this.prisma.review.create({
       data: {
         rating,

@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 export class CreateAuthDto {}
 
 export type SignUpDto = {
@@ -6,7 +7,7 @@ export type SignUpDto = {
   email: string;
   password: string;
   phone?: string;
-  role?: string;
+  role?: Role;
   hotelId?: number;
 };
 

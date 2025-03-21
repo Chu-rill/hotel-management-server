@@ -21,7 +21,7 @@ export class RoomService {
       createDto.roomtype,
       createDto.price,
       createDto.status,
-      createDto.hotel,
+      createDto.hotel.connect?.id,
     );
     if (!room) {
       return {
@@ -39,10 +39,10 @@ export class RoomService {
 
   async findAll() {
     const room = await this.roomRepository.findRooms();
-    if (!room) {
+    if (!room || room.length === 0) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find rooms',
+        message: 'No rooms found',
         data: null,
       };
     }
@@ -58,7 +58,7 @@ export class RoomService {
     if (!room) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find room',
+        message: `Room with ID ${id} not found`,
         data: null,
       };
     }
@@ -74,7 +74,7 @@ export class RoomService {
     if (!room) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find room',
+        message: `Room with RoomNumber ${id} not found`,
         data: null,
       };
     }

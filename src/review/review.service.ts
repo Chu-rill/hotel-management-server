@@ -10,8 +10,8 @@ export class ReviewService {
     const review = await this.reviewRepository.createReview(
       createDto.rating,
       createDto.comment,
-      createDto.customer,
-      createDto.hotel,
+      createDto.customer.connect?.id,
+      createDto.hotel.connect?.id,
     );
     if (!review) {
       return {
