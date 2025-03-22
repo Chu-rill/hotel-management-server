@@ -79,7 +79,6 @@ model Hotel {
 
 model Room {
   id            Int             @id @default(autoincrement())
-  roomNumber    String
   roomtype      RoomType        @default(SINGLE)
   price         Float
   status        Satus           @default(AVAILABLE)
@@ -92,7 +91,7 @@ model Room {
   amenityId     Int?
   roomAmenities RoomAmenities[]
 
-  @@unique([hotelId, roomNumber])
+  @@unique([hotelId, id])
 }
 
 enum RoomType {

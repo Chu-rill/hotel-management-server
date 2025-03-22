@@ -6,18 +6,7 @@ import { RoomRepository } from './room.repository';
 export class RoomService {
   constructor(private roomRepository: RoomRepository) {}
   async create(createDto: Prisma.RoomCreateInput) {
-    let existingRoom = await this.roomRepository.findRoomByRoomNumber(
-      createDto.roomNumber,
-    );
-    if (!existingRoom) {
-      return {
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Room Already Exist',
-        data: null,
-      };
-    }
     const room = await this.roomRepository.createRoom(
-      createDto.roomNumber,
       createDto.roomtype,
       createDto.price,
       createDto.status,
@@ -59,22 +48,6 @@ export class RoomService {
       return {
         statusCode: HttpStatus.NOT_FOUND,
         message: `Room with ID ${id} not found`,
-        data: null,
-      };
-    }
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Room retrieved successfully ',
-      data: room,
-    };
-  }
-
-  async findOneByRoomNumber(id: string) {
-    const room = await this.roomRepository.findRoomByRoomNumber(id);
-    if (!room) {
-      return {
-        statusCode: HttpStatus.NOT_FOUND,
-        message: `Room with RoomNumber ${id} not found`,
         data: null,
       };
     }
