@@ -1,15 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/infra/db/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, RoomType, Satus } from '@prisma/client';
 
 @Injectable()
 export class RoomRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createRoom(roomNumber, roomtype, price, status, hotelId) {
+  async createRoom(
+    roomtype: RoomType,
+    price: number,
+    status: Satus,
+    hotelId: number,
+  ) {
     const room = await this.prisma.room.create({
       data: {
-        roomNumber,
         roomtype,
         price,
         status,
@@ -31,25 +35,6 @@ export class RoomRepository {
       },
       select: {
         id: true,
-        roomNumber: true,
-        roomtype: true,
-        price: true,
-        status: true,
-        hotel: true,
-        amenity: true,
-      },
-    });
-    return room;
-  }
-
-  async findRoomByRoomNumber(roomNumber: string) {
-    const room = await this.prisma.room.findFirst({
-      where: {
-        roomNumber,
-      },
-      select: {
-        id: true,
-        roomNumber: true,
         roomtype: true,
         price: true,
         status: true,
@@ -68,7 +53,6 @@ export class RoomRepository {
       },
       select: {
         id: true,
-        roomNumber: true,
         roomtype: true,
         price: true,
         status: true,
@@ -84,7 +68,6 @@ export class RoomRepository {
       where: { id },
       select: {
         id: true,
-        roomNumber: true,
         roomtype: true,
         price: true,
         status: true,

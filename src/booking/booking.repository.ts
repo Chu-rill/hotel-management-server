@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/infra/db/prisma.service';
-import { Prisma } from '@prisma/client';
-import { number } from 'joi';
+import { Prisma, BookingStatus } from '@prisma/client';
 
 @Injectable()
 export class BookingRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createBooking(checkIn, checkOut, status, customerId, roomId) {
+  async createBooking(
+    checkIn: Date,
+    checkOut: Date,
+    status: BookingStatus,
+    customerId: number,
+    roomId: number,
+  ) {
     const booking = await this.prisma.booking.create({
       data: {
         checkIn,

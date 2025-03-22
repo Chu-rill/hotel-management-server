@@ -6,22 +6,11 @@ import { RoomRepository } from './room.repository';
 export class RoomService {
   constructor(private roomRepository: RoomRepository) {}
   async create(createDto: Prisma.RoomCreateInput) {
-    let existingRoom = await this.roomRepository.findRoomByRoomNumber(
-      createDto.roomNumber,
-    );
-    if (!existingRoom) {
-      return {
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Room Already Exist',
-        data: null,
-      };
-    }
     const room = await this.roomRepository.createRoom(
-      createDto.roomNumber,
       createDto.roomtype,
       createDto.price,
       createDto.status,
-      createDto.hotel,
+      createDto.hotel.connect?.id,
     );
     if (!room) {
       return {
@@ -39,10 +28,10 @@ export class RoomService {
 
   async findAll() {
     const room = await this.roomRepository.findRooms();
-    if (!room) {
+    if (!room || room.length === 0) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find rooms',
+        message: 'No rooms found',
         data: null,
       };
     }
@@ -58,23 +47,7 @@ export class RoomService {
     if (!room) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find room',
-        data: null,
-      };
-    }
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Room retrieved successfully ',
-      data: room,
-    };
-  }
-
-  async findOneByRoomNumber(id: string) {
-    const room = await this.roomRepository.findRoomByRoomNumber(id);
-    if (!room) {
-      return {
-        statusCode: HttpStatus.NOT_FOUND,
-        message: 'Failed to find room',
+        message: `Room with ID ${id} not found`,
         data: null,
       };
     }

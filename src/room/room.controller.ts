@@ -41,8 +41,8 @@ export class RoomController {
   @Get('/:id')
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(getRoomValidation))
-  findOne(@Param('id') id: string) {
-    return this.roomService.findOneByRoomNumber(id);
+  findOne(@Param('id') id: number) {
+    return this.roomService.findOneById(id);
   }
 
   @Put('/:id')
