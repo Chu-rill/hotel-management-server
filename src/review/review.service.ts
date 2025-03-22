@@ -63,7 +63,7 @@ export class ReviewService {
     };
   }
 
-  async findReviewsByHotel(hotelId: number) {
+  async findReviewsByHotel(hotelId: string) {
     const review = await this.reviewRepository.findReviewsByHotel(hotelId);
 
     if (!review) {

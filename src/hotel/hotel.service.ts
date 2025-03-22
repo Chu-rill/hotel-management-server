@@ -55,7 +55,7 @@ export class HotelService {
     };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const hotel = await this.hotelRepository.findHotelById(id);
     if (!hotel) {
       return {
@@ -71,7 +71,7 @@ export class HotelService {
     };
   }
 
-  async update(id: number, updateDto: Prisma.HotelUpdateInput) {
+  async update(id: string, updateDto: Prisma.HotelUpdateInput) {
     const hotel = await this.hotelRepository.updateHotel(id, updateDto);
     if (!hotel) {
       return {
@@ -87,7 +87,7 @@ export class HotelService {
     };
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const hotel = await this.hotelRepository.deleteHotel(id);
     if (!hotel) {
       return {

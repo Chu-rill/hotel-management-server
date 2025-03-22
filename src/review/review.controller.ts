@@ -11,8 +11,6 @@ import {
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { ReviewService } from './review.service';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { JoiValidationPipe } from 'src/utils/schema-validation/validation.pipe';
 import {
@@ -29,7 +27,7 @@ export class ReviewController {
 
   @Post()
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(createReviewValidation))
+  @UsePipes(new JoiValidationPipe(createReviewValidation, 'body'))
   create(@Body() createReviewDto: Prisma.ReviewCreateInput) {
     return this.reviewService.create(createReviewDto);
   }
@@ -42,21 +40,21 @@ export class ReviewController {
 
   @Get('/:id')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(getReviewValidation))
+  @UsePipes(new JoiValidationPipe(getReviewValidation, 'params'))
   findOne(@Param('id') id: number) {
     return this.reviewService.findOne(id);
   }
 
   @Get('/:hotelId')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(getReviewValidationHotel))
-  findOneByHotel(@Param('hotelId') id: number) {
+  @UsePipes(new JoiValidationPipe(getReviewValidationHotel, 'params'))
+  findOneByHotel(@Param('hotelId') id: string) {
     return this.reviewService.findReviewsByHotel(id);
   }
 
   @Delete('/:id')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(deleteReviewValidation))
+  @UsePipes(new JoiValidationPipe(deleteReviewValidation, 'params'))
   remove(@Param('id') id: number) {
     return this.reviewService.remove(id);
   }

@@ -54,14 +54,14 @@ model Staff {
   id        Int      @id @default(autoincrement())
   userId    String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  hotelId   Int
   hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Hotel {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @unique @default(cuid())
   name        String   @unique
   description String?
   address     String
@@ -82,8 +82,8 @@ model Room {
   roomtype      RoomType        @default(SINGLE)
   price         Float
   status        Satus           @default(AVAILABLE)
-  hotelId       Int
   hotel         Hotel           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId       String
   bookings      Booking[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -160,7 +160,7 @@ model Review {
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId Int
   hotel      Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  hotelId    Int
+  hotelId    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

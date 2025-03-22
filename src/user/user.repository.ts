@@ -52,7 +52,7 @@ export class UserRepository {
     return profile;
   }
 
-  async createStaff(userId: string, hotelId: number) {
+  async createStaff(userId: string, hotelId: string) {
     const profile = await this.prisma.staff.create({
       data: {
         userId: userId,

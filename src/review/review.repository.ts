@@ -9,7 +9,7 @@ export class ReviewRepository {
     rating: number,
     comment: string,
     customerId: number,
-    hotelId: number,
+    hotelId: string,
   ) {
     const review = await this.prisma.review.create({
       data: {
@@ -43,7 +43,7 @@ export class ReviewRepository {
     return review;
   }
 
-  async findReviewsByHotel(hotelId: number) {
+  async findReviewsByHotel(hotelId: string) {
     const reviews = await this.prisma.review.findMany({
       where: {
         hotelId: hotelId,

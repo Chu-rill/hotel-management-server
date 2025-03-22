@@ -8,7 +8,7 @@ export type SignUpDto = {
   password: string;
   phone?: string;
   role?: Role;
-  hotelId?: number;
+  hotelId?: string;
 };
 
 export type LoginDto = {
