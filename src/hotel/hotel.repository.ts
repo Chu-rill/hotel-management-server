@@ -27,7 +27,7 @@ export class HotelRepository {
     return hotel;
   }
 
-  async findHotelById(id: number) {
+  async findHotelById(id: string) {
     const hotel = await this.prisma.hotel.findUnique({
       where: {
         id,
@@ -40,6 +40,7 @@ export class HotelRepository {
         phone: true,
         email: true,
         description: true,
+        rating: true,
       },
     });
     return hotel;
@@ -58,6 +59,7 @@ export class HotelRepository {
         phone: true,
         email: true,
         description: true,
+        rating: true,
       },
     });
     return hotel;
@@ -68,7 +70,7 @@ export class HotelRepository {
     return hotel;
   }
 
-  async updateHotel(id: number, updateHotel: Prisma.HotelUpdateInput) {
+  async updateHotel(id: string, updateHotel: Prisma.HotelUpdateInput) {
     const updated = await this.prisma.hotel.update({
       where: { id },
       data: {
@@ -82,12 +84,13 @@ export class HotelRepository {
         phone: true,
         email: true,
         description: true,
+        rating: true,
       },
     });
     return updated;
   }
 
-  async deleteHotel(id: number) {
+  async deleteHotel(id: string) {
     const hotel = await this.prisma.hotel.delete({
       where: { id },
       select: {
@@ -98,6 +101,7 @@ export class HotelRepository {
         phone: true,
         email: true,
         description: true,
+        rating: true,
       },
     });
     return hotel;

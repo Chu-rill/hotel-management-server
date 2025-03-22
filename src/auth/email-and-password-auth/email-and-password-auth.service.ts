@@ -39,6 +39,8 @@ export class AuthService {
     let profile;
     if (user.role == 'STAFF') {
       profile = await this.userRespository.createStaff(user.id, dto.hotelId);
+    } else if (user.role === 'CUSTOMER') {
+      profile = await this.userRespository.createCustomer(user.id);
     }
     profile = await this.userRespository.createCustomer(user.id);
 

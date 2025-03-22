@@ -1,5 +1,4 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/user.dto';
 import { UserRepository } from './user.repository';
 import { CloudinaryService } from 'src/infra/cloudinary/cloudinary.service';
 
@@ -9,9 +8,9 @@ export class UserService {
     private userRepository: UserRepository,
     private cloudinaryService: CloudinaryService,
   ) {}
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+  // create(createUserDto: CreateUserDto) {
+  //   return 'This action adds a new user';
+  // }
 
   findAll() {
     return `This action returns all user`;

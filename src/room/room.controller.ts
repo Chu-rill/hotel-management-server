@@ -27,7 +27,7 @@ export class RoomController {
 
   @Post()
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(createRoomValidation))
+  @UsePipes(new JoiValidationPipe(createRoomValidation, 'body'))
   create(@Body() createRoomDto: Prisma.RoomCreateInput) {
     return this.roomService.create(createRoomDto);
   }
@@ -40,14 +40,14 @@ export class RoomController {
 
   @Get('/:id')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(getRoomValidation))
+  @UsePipes(new JoiValidationPipe(getRoomValidation, 'params'))
   findOne(@Param('id') id: number) {
     return this.roomService.findOneById(id);
   }
 
   @Put('/:id')
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(updateRoomValidation))
+  @UsePipes(new JoiValidationPipe(updateRoomValidation, 'params'))
   update(
     @Param('id') id: number,
     @Body() updateRoomDto: Prisma.RoomUpdateInput,
@@ -57,7 +57,7 @@ export class RoomController {
 
   @Delete('/:id')
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(deleteRoomValidation))
+  @UsePipes(new JoiValidationPipe(deleteRoomValidation, 'params'))
   remove(@Param('id') id: number) {
     return this.roomService.remove(id);
   }

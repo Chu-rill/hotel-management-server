@@ -17,13 +17,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/signup')
-  @UsePipes(new JoiValidationPipe(signup))
+  @UsePipes(new JoiValidationPipe(signup, 'body'))
   SignUp(@Body() dto: SignUpDto) {
     return this.authService.signup(dto);
   }
 
   @Post('/login')
-  @UsePipes(new JoiValidationPipe(login))
+  @UsePipes(new JoiValidationPipe(login, 'body'))
   Login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }

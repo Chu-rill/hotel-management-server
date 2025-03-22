@@ -27,7 +27,7 @@ export class HotelController {
 
   @Post()
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(createHotelValidation))
+  @UsePipes(new JoiValidationPipe(createHotelValidation, 'body'))
   async create(@Body() createHotelDto: Prisma.HotelCreateInput) {
     return this.hotelService.create(createHotelDto);
   }
@@ -41,16 +41,16 @@ export class HotelController {
 
   @Get('/:id')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(getHotelValidation))
-  async findOne(@Param('id') id: number) {
+  @UsePipes(new JoiValidationPipe(getHotelValidation, 'params'))
+  async findOne(@Param('id') id: string) {
     return this.hotelService.findOne(id);
   }
 
   @Put('/:id')
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(updateHotelValidation))
+  @UsePipes(new JoiValidationPipe(updateHotelValidation, 'params'))
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateHotelDto: Prisma.HotelUpdateInput,
   ) {
     return this.hotelService.update(id, updateHotelDto);
@@ -58,8 +58,8 @@ export class HotelController {
 
   @Delete('/:id')
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(deleteHotelValidation))
+  @UsePipes(new JoiValidationPipe(deleteHotelValidation, 'params'))
   async remove(@Param('id') id: string) {
-    return this.hotelService.remove(+id);
+    return this.hotelService.remove(id);
   }
 }

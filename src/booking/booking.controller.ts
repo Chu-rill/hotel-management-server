@@ -27,7 +27,7 @@ export class BookingController {
 
   @Post()
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(createBookingValidation))
+  @UsePipes(new JoiValidationPipe(createBookingValidation, 'body'))
   create(@Body() createBookingDto: Prisma.BookingCreateInput) {
     return this.bookingService.create(createBookingDto);
   }
@@ -40,14 +40,14 @@ export class BookingController {
 
   @Get('/:id')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(getBookingValidation))
+  @UsePipes(new JoiValidationPipe(getBookingValidation, 'params'))
   findOne(@Param('id') id: number) {
     return this.bookingService.findOne(id);
   }
 
   @Put('/:id')
   @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(updateBookingValidation))
+  @UsePipes(new JoiValidationPipe(updateBookingValidation, 'params'))
   update(
     @Param('id') id: number,
     @Body() updateBookingDto: Prisma.BookingUpdateInput,
@@ -57,7 +57,7 @@ export class BookingController {
 
   @Delete('/:id')
   @UseGuards(AuthGuard)
-  @UsePipes(new JoiValidationPipe(deleteBookingValidation))
+  @UsePipes(new JoiValidationPipe(deleteBookingValidation, 'params'))
   remove(@Param('id') id: number) {
     return this.bookingService.remove(id);
   }
