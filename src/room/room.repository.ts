@@ -23,8 +23,10 @@ export class RoomRepository {
     return room;
   }
 
-  async findRooms() {
-    const room = await this.prisma.room.findMany();
+  async findRoomsByHotel(hotelId: string) {
+    const room = await this.prisma.room.findMany({
+      where: { hotelId },
+    });
     return room;
   }
 
