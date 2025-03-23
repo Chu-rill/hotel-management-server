@@ -1,14 +1,15 @@
+import { RoomType, Satus } from '@prisma/client';
 import * as Joi from 'joi';
 
 export const createRoomValidation = Joi.object({
-  roomNumber: Joi.string().required().messages({
+  roomNumber: Joi.string().optional().messages({
     'string.base': 'Room Number must be a string',
     'string.empty': 'Room Number is required',
     'any.required': 'Room Number is a required field',
   }),
   roomtype: Joi.string()
     .valid('SINGLE', 'DOUBLE', 'SUITE')
-    .required()
+    .optional()
     .messages({
       'string.base': 'Room Type must be a string',
       'string.empty': 'Room Type is required',
@@ -21,19 +22,28 @@ export const createRoomValidation = Joi.object({
   }),
   status: Joi.string()
     .valid('AVAILABLE', 'BOOKED', 'MAINTENANCE', 'OCCUPIED')
-    .required()
+    .optional()
     .messages({
       'string.base': 'Status must be a string',
       'any.only': 'Status must be one of [available, occupied, maintenance]',
       'any.required': 'Status is a required field',
     }),
-  hotelId: Joi.number().integer().positive().required().messages({
-    'number.base': 'Hotel ID must be a valid number',
-    'number.integer': 'Hotel ID must be an integer',
-    'number.positive': 'Hotel ID must be a positive number',
-    'any.required': 'Hotel ID is a required field',
-  }),
+  hotelId: Joi.string()
+    .pattern(/^c[a-z0-9]{24}$/) // Matches CUID format
+    .required()
+    .messages({
+      'string.pattern.base': 'ID must be a valid CUID',
+      'string.empty': 'ID is required',
+      'any.required': 'ID is a required field',
+    }),
 });
+
+export type CreateRoomDto = {
+  roomType?: RoomType;
+  price: number;
+  status?: Satus;
+  hotelId: string;
+};
 
 export const updateRoomValidation = Joi.object({
   roomNumber: Joi.string().optional().messages({
@@ -60,6 +70,13 @@ export const updateRoomValidation = Joi.object({
   }),
 });
 
+export type updateRoomDto = {
+  roomType?: RoomType;
+  price?: number;
+  status?: Satus;
+  hotelId: string;
+};
+
 export const getRoomValidation = Joi.object({
   id: Joi.number().integer().positive().required().messages({
     'number.base': 'ID must be a valid number',
@@ -67,6 +84,19 @@ export const getRoomValidation = Joi.object({
     'number.positive': 'ID must be a positive number',
     'any.required': 'ID is a required field',
   }),
+});
+
+export const getHotelValidation = Joi.object({
+  id: Joi.number()
+    .integer() // Ensures the value is an integer
+    .positive() // Ensures the value is positive
+    .required()
+    .messages({
+      'number.base': 'ID must be a valid number',
+      'number.integer': 'ID must be an integer',
+      'number.positive': 'ID must be a positive number',
+      'any.required': 'ID is a required field',
+    }),
 });
 
 export const deleteRoomValidation = Joi.object({

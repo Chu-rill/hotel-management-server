@@ -10,13 +10,15 @@ import {
   Put,
 } from '@nestjs/common';
 import { RoomService } from './room.service';
-import { Prisma } from '@prisma/client';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { JoiValidationPipe } from 'src/utils/schema-validation/validation.pipe';
 import {
+  CreateRoomDto,
   createRoomValidation,
   deleteRoomValidation,
+  getHotelValidation,
   getRoomValidation,
+  updateRoomDto,
   updateRoomValidation,
 } from './room.validation';
 import { AuthGuard } from 'src/guard/auth.guard';
@@ -28,14 +30,15 @@ export class RoomController {
   @Post()
   @UseGuards(AdminGuard)
   @UsePipes(new JoiValidationPipe(createRoomValidation, 'body'))
-  create(@Body() createRoomDto: Prisma.RoomCreateInput) {
+  create(@Body() createRoomDto: CreateRoomDto) {
     return this.roomService.create(createRoomDto);
   }
 
-  @Get()
+  @Get('/:hotelId')
   @UseGuards(AuthGuard)
-  findAll() {
-    return this.roomService.findAll();
+  @UsePipes(new JoiValidationPipe(getHotelValidation, 'params'))
+  findAll(@Param('hotelId') hotelId: string) {
+    return this.roomService.findAll(hotelId);
   }
 
   @Get('/:id')
@@ -48,10 +51,7 @@ export class RoomController {
   @Put('/:id')
   @UseGuards(AdminGuard)
   @UsePipes(new JoiValidationPipe(updateRoomValidation, 'params'))
-  update(
-    @Param('id') id: number,
-    @Body() updateRoomDto: Prisma.RoomUpdateInput,
-  ) {
+  update(@Param('id') id: number, @Body() updateRoomDto: updateRoomDto) {
     return this.roomService.update(id, updateRoomDto);
   }
 
