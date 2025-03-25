@@ -28,6 +28,9 @@ export const createRoomValidation = Joi.object({
       'any.only': 'Status must be one of [available, occupied, maintenance]',
       'any.required': 'Status is a required field',
     }),
+});
+
+export const hotelIdValidation = Joi.object({
   hotelId: Joi.string()
     .pattern(/^c[a-z0-9]{24}$/) // Matches CUID format
     .required()

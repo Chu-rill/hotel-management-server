@@ -2,11 +2,23 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { RoomRepository } from './room.repository';
 import { CreateRoomDto, updateRoomDto } from './room.validation';
+import { HotelRepository } from 'src/hotel/hotel.repository';
 
 @Injectable()
 export class RoomService {
-  constructor(private roomRepository: RoomRepository) {}
+  constructor(
+    private roomRepository: RoomRepository,
+    private hotelRepository: HotelRepository,
+  ) {}
   async create(createDto: CreateRoomDto) {
+    const hotel = await this.hotelRepository.findHotelById(createDto.hotelId);
+    if (!hotel) {
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'Hotel not found',
+        data: null,
+      };
+    }
     const room = await this.roomRepository.createRoom(
       createDto.roomType,
       createDto.price,
@@ -43,8 +55,9 @@ export class RoomService {
     };
   }
 
-  async findOneById(id: number) {
-    const room = await this.roomRepository.findRoomById(id);
+  async findOneById(id: number, hotelId: string) {
+    console.log(id, hotelId);
+    const room = await this.roomRepository.findRoomById(id, hotelId);
     if (!room) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
