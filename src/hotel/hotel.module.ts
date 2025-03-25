@@ -8,5 +8,6 @@ import { DatabaseModule } from 'src/infra/db/database.module';
   controllers: [HotelController],
   providers: [HotelService, HotelRepository],
   imports: [DatabaseModule],
+  exports: [HotelRepository],
 })
 export class HotelModule {}
