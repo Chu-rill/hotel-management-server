@@ -32,16 +32,17 @@ export class RoomRepository {
     return room;
   }
 
-  async findRoomById(id: number, hotelId: string) {
+  async findRoomByRoomNumber(roomNumber: number, hotelId: string) {
     const room = await this.prisma.room.findFirst({
       where: {
         AND: [
-          { id },
+          { roomNumber },
           { hotelId }, // Assuming your Room model has a hotelId field
         ],
       },
       select: {
         id: true,
+        roomNumber: true,
         roomtype: true,
         price: true,
         status: true,
@@ -60,6 +61,7 @@ export class RoomRepository {
       },
       select: {
         id: true,
+        roomNumber: true,
         roomtype: true,
         price: true,
         status: true,
@@ -75,6 +77,7 @@ export class RoomRepository {
       where: { id },
       select: {
         id: true,
+        roomNumber: true,
         roomtype: true,
         price: true,
         status: true,
