@@ -2,8 +2,8 @@ import { RoomType, Satus } from '@prisma/client';
 import * as Joi from 'joi';
 
 export const createRoomValidation = Joi.object({
-  roomNumber: Joi.string().optional().messages({
-    'string.base': 'Room Number must be a string',
+  roomNumber: Joi.number().optional().messages({
+    'string.base': 'Room Number must be a number',
     'string.empty': 'Room Number is required',
     'any.required': 'Room Number is a required field',
   }),
@@ -78,6 +78,7 @@ export type updateRoomDto = {
   roomType?: RoomType;
   price?: number;
   status?: Satus;
+  roomNumber?: number;
   hotelId: string;
 };
 

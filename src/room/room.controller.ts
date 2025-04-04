@@ -52,12 +52,13 @@ export class RoomController {
     return this.roomService.findAll(hotelId);
   }
 
-  //get a single room by the id
+  //get a single room by the roomNumber
   @Get('/:id')
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(getRoomValidation, 'params'))
   findOne(@Param('id') id: number, @Query('hotelId') hotelId: string) {
-    return this.roomService.findOneById(id, hotelId);
+    let roomNumber = parseInt(id.toString());
+    return this.roomService.findOneById(roomNumber, hotelId);
   }
 
   //update a single room by the id
