@@ -10,6 +10,7 @@ export class RoomRepository {
     roomtype: RoomType,
     price: number,
     status: Satus,
+    roomNumber: number,
     hotelId: string,
   ) {
     const room = await this.prisma.room.create({
@@ -17,6 +18,7 @@ export class RoomRepository {
         roomtype,
         price,
         status,
+        roomNumber,
         hotelId,
       },
     });
