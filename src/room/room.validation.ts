@@ -45,7 +45,7 @@ export type CreateRoomDto = {
   roomType?: RoomType;
   price: number;
   status?: Satus;
-  hotelId: string;
+  hotelId?: string;
 };
 
 export const updateRoomValidation = Joi.object({
