@@ -45,6 +45,7 @@ export type CreateRoomDto = {
   roomType?: RoomType;
   price: number;
   status?: Satus;
+  roomNumber?: number;
   hotelId?: string;
 };
 

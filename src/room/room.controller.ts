@@ -45,7 +45,7 @@ export class RoomController {
   }
 
   //get all rooms in a hotel
-  @Get('/:hotelId')
+  @Get()
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(getHotelValidation, 'params'))
   findAll(@Param('hotelId') hotelId: string) {

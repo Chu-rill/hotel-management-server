@@ -23,6 +23,7 @@ export class RoomService {
       createDto.roomType,
       createDto.price,
       createDto.status,
+      createDto.roomNumber,
       createDto.hotelId,
     );
     if (!room) {
