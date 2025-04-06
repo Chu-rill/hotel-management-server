@@ -2,27 +2,71 @@
   <head>
     <title>Booking Confirmation</title>
     <style>
-      body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin:
-      0; padding: 0; } .container { max-width: 600px; margin: 20px auto;
-      background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px
-      4px rgba(0, 0, 0, 0.1); } .header { text-align: center; margin-bottom:
-      20px; } .content { font-size: 16px; color: #333; } .footer { text-align:
-      center; margin-top: 20px; font-size: 12px; color: #888; }
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa; margin: 0; padding: 0; color: #333;
+      line-height: 1.6; } .container { max-width: 600px; margin: 40px auto;
+      background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 5px
+      15px rgba(0, 0, 0, 0.08); } .header { text-align: center; margin-bottom:
+      30px; padding-bottom: 20px; border-bottom: 1px solid #eaeaea; } .logo {
+      margin-bottom: 15px; font-size: 24px; font-weight: bold; color: #2c3e50; }
+      .header h1 { color: #2c3e50; margin: 0; font-weight: 600; } .content {
+      font-size: 16px; color: #444; } .booking-details { background-color:
+      #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0; border-left:
+      4px solid #3498db; } .booking-details p { margin: 8px 0; display: flex;
+      justify-content: space-between; } .booking-details strong { color:
+      #2c3e50; } .booking-id { font-size: 18px; color: #3498db; margin-bottom:
+      15px; text-align: center; font-weight: bold; } .cta-button { display:
+      block; text-align: center; margin: 30px auto; } .cta-button a {
+      background-color: #3498db; color: white; padding: 12px 30px;
+      text-decoration: none; border-radius: 30px; font-weight: 600; display:
+      inline-block; transition: background-color 0.3s; } .cta-button a:hover {
+      background-color: #2980b9; } .footer { text-align: center; margin-top:
+      30px; font-size: 14px; color: #888; padding-top: 20px; border-top: 1px
+      solid #eaeaea; } .contact-info { display: flex; justify-content: center;
+      margin-bottom: 15px; } .contact-info span { margin: 0 10px; } .thank-you {
+      text-align: center; margin: 25px 0; font-size: 18px; color: #2c3e50; }
     </style>
   </head>
   <body>
     <div class='container'>
       <div class='header'>
+        <div class='logo'>InnkeeperPro</div>
         <h1>Booking Confirmation</h1>
       </div>
       <div class='content'>
         <p>Dear {{firstName}} {{lastName}},</p>
-        <p>Thank you for making a reservation with us!</p>
-        <p>Your booking ID is: <strong>{{bookingId}}</strong></p>
-        <p>We look forward to hosting you. If you have any questions, feel free
-          to contact us.</p>
+        <p>Thank you for choosing InnkeeperPro for your upcoming stay. We're
+          excited to host you and make your visit special!</p>
+
+        <div class='booking-id'>Booking ID: {{bookingId}}</div>
+
+        <div class='booking-details'>
+          <p><span>Hotel:</span> <strong>{{hotelName}}</strong></p>
+          <p><span>Check-In:</span> <strong>{{checkIn}}</strong></p>
+          <p><span>Check-Out:</span> <strong>{{checkOut}}</strong></p>
+          <p><span>Room Type:</span> <strong>{{roomType}}</strong></p>
+          <p><span>Room Number:</span> <strong>{{roomNumber}}</strong></p>
+          <p><span>Status:</span> <strong>{{status}}</strong></p>
+        </div>
+
+        <p>Your reservation is confirmed and we're looking forward to welcoming
+          you. If you need to make any changes to your booking, please contact
+          us at least 24 hours before your scheduled check-in.</p>
+
+        <div class='cta-button'>
+          <a href='https://innkeeperpro.com/my-bookings/{{bookingId}}'>View
+            Booking Details</a>
+        </div>
+
+        <div class='thank-you'>
+          We look forward to hosting you!
+        </div>
       </div>
       <div class='footer'>
+        <div class='contact-info'>
+          <span>📞 +1-888-555-0123</span>
+          <span>✉️ support@innkeeperpro.com</span>
+        </div>
         <p>&copy; 2025 InnkeeperPro. All rights reserved.</p>
       </div>
     </div>

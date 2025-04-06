@@ -2,12 +2,14 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { BookingRepository } from './booking.repository';
 import { CreateBookingDto, UpdateBookingDto } from './booking.validation';
 import { HotelRepository } from 'src/hotel/hotel.repository';
+import { MailService } from 'src/infra/mail/mail.service';
 
 @Injectable()
 export class BookingService {
   constructor(
     private bookingRepository: BookingRepository,
     private hotelRepository: HotelRepository,
+    private mailService: MailService,
   ) {}
 
   async create(createDto: CreateBookingDto) {
@@ -32,6 +34,21 @@ export class BookingService {
         data: null,
       };
     }
+
+    const data = {
+      subject: 'Booking Confirmation',
+      firstname: booking.customer.user.firstName,
+      lastname: booking.customer.user.lastName,
+      bookingId: booking.id,
+      hotelName: hotel.name,
+      checkIn: booking.checkIn,
+      checkOut: booking.checkOut,
+      roomType: booking.room.roomtype,
+      roomNumber: booking.room.roomNumber,
+      status: booking.status,
+    };
+
+    await this.mailService.sendBookingEmail(booking.customer.user.email, data); // Ensure type compatibility
 
     return {
       statusCode: HttpStatus.CREATED,
@@ -58,7 +75,7 @@ export class BookingService {
     };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const booking = await this.bookingRepository.findBookingById(id);
 
     if (!booking) {
@@ -76,7 +93,7 @@ export class BookingService {
     };
   }
 
-  async update(id: number, updateDto: UpdateBookingDto) {
+  async update(id: string, updateDto: UpdateBookingDto) {
     const updatedBooking = await this.bookingRepository.update(id, updateDto);
 
     if (!updatedBooking) {
@@ -94,7 +111,7 @@ export class BookingService {
     };
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const deletedBooking = await this.bookingRepository.delete(id);
 
     if (!deletedBooking) {

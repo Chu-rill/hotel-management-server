@@ -50,21 +50,21 @@ export class BookingController {
   @Get('/:id')
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(getBookingValidation, 'params'))
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.bookingService.findOne(id);
   }
 
   @Put('/:id')
   @UseGuards(AdminGuard)
   @UsePipes(new JoiValidationPipe(updateBookingValidation, 'params'))
-  update(@Param('id') id: number, @Body() updateBookingDto: UpdateBookingDto) {
+  update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
     return this.bookingService.update(id, updateBookingDto);
   }
 
   @Delete('/:id')
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(deleteBookingValidation, 'params'))
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.bookingService.remove(id);
   }
 }

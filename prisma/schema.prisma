@@ -110,7 +110,7 @@ enum Satus {
 }
 
 model Booking {
-  id         Int           @id @default(autoincrement())
+  id         String        @id @unique @default(cuid())
   checkIn    DateTime
   checkOut   DateTime
   status     BookingStatus
@@ -136,7 +136,7 @@ model Payment {
   paymentDate DateTime      @default(now())
   method      PaymentMethod @default(DEBIT_CARD)
   status      PaymentStatus @default(PENDING)
-  bookingId   Int           @unique
+  bookingId   String        @unique
   customerId  Int
   booking     Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   customer    Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
