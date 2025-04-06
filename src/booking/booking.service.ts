@@ -1,18 +1,18 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { BookingRepository } from './booking.repository';
+import { CreateBookingDto, UpdateBookingDto } from './booking.validation';
 
 @Injectable()
 export class BookingService {
   constructor(private bookingRepository: BookingRepository) {}
 
-  async create(createDto: Prisma.BookingCreateInput) {
+  async create(createDto: CreateBookingDto) {
     const booking = await this.bookingRepository.createBooking(
-      new Date(createDto.checkIn),
-      new Date(createDto.checkOut),
+      createDto.checkIn,
+      createDto.checkOut,
       createDto.status,
-      createDto.customer.connect?.id,
-      createDto.room.connect?.id,
+      createDto.customerId,
+      createDto.roomId,
     );
 
     if (!booking) {
@@ -66,7 +66,7 @@ export class BookingService {
     };
   }
 
-  async update(id: number, updateDto: Prisma.BookingUpdateInput) {
+  async update(id: number, updateDto: UpdateBookingDto) {
     const updatedBooking = await this.bookingRepository.update(id, updateDto);
 
     if (!updatedBooking) {

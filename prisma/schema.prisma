@@ -78,7 +78,7 @@ model Hotel {
 }
 
 model Room {
-  id            Int             @id @default(autoincrement())
+  id            String          @id @unique @default(cuid())
   roomNumber    Int             @default(0)
   roomtype      RoomType        @default(SINGLE)
   price         Float
@@ -116,7 +116,7 @@ model Booking {
   customer   Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId Int
   room       Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  roomId     Int
+  roomId     String
   payment    Payment?
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
@@ -174,7 +174,7 @@ model Amenity {
 }
 
 model RoomAmenities {
-  roomId    Int
+  roomId    String
   amenityId Int
   room      Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
   amenity   Amenity @relation(fields: [amenityId], references: [id], onDelete: Cascade)

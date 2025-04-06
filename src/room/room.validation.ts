@@ -7,7 +7,7 @@ export const createRoomValidation = Joi.object({
     'string.empty': 'Room Number is required',
     'any.required': 'Room Number is a required field',
   }),
-  roomtype: Joi.string()
+  roomType: Joi.string()
     .valid('SINGLE', 'DOUBLE', 'SUITE')
     .optional()
     .messages({

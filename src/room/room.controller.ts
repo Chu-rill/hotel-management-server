@@ -65,7 +65,7 @@ export class RoomController {
   @Put('/:id')
   @UseGuards(AdminGuard)
   @UsePipes(new JoiValidationPipe(updateRoomValidation, 'params'))
-  update(@Param('id') id: number, @Body() updateRoomDto: updateRoomDto) {
+  update(@Param('id') id: string, @Body() updateRoomDto: updateRoomDto) {
     return this.roomService.update(id, updateRoomDto);
   }
 
@@ -73,7 +73,7 @@ export class RoomController {
   @Delete('/:id')
   @UseGuards(AdminGuard)
   @UsePipes(new JoiValidationPipe(deleteRoomValidation, 'params'))
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.roomService.remove(id);
   }
 }

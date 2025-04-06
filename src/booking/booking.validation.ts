@@ -1,3 +1,4 @@
+import { BookingStatus } from '@prisma/client';
 import * as Joi from 'joi';
 
 export const createBookingValidation = Joi.object({
@@ -16,20 +17,26 @@ export const createBookingValidation = Joi.object({
       'Status must be one of [PENDING, CONFIRMED, CANCELLED, COMPLETED]',
     'any.required': 'Status is a required field',
   }),
-  customerId: Joi.number().integer().positive().required().messages({
+  customerId: Joi.number().integer().positive().optional().messages({
     'number.base': 'Customer ID must be a valid number',
     'number.integer': 'Customer ID must be an integer',
     'number.positive': 'Customer ID must be a positive number',
     'any.required': 'Customer ID is a required field',
   }),
-  roomId: Joi.number().integer().positive().required().messages({
+  roomId: Joi.string().required().messages({
     'number.base': 'Room ID must be a valid number',
     'number.integer': 'Room ID must be an integer',
     'number.positive': 'Room ID must be a positive number',
     'any.required': 'Room ID is a required field',
   }),
 });
-
+export type CreateBookingDto = {
+  checkIn: Date;
+  checkOut: Date;
+  status: BookingStatus;
+  customerId: number;
+  roomId: string;
+};
 export const updateBookingValidation = Joi.object({
   checkIn: Joi.date().optional().messages({
     'date.base': 'Check-in must be a valid date',
@@ -54,7 +61,13 @@ export const updateBookingValidation = Joi.object({
     'number.positive': 'Room ID must be a positive number',
   }),
 });
-
+export type UpdateBookingDto = {
+  checkIn?: Date;
+  checkOut?: Date;
+  status?: BookingStatus;
+  customerId?: number;
+  roomId?: string;
+};
 export const getBookingValidation = Joi.object({
   id: Joi.number().integer().positive().required().messages({
     'number.base': 'ID must be a valid number',
