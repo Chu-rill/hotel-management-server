@@ -21,6 +21,9 @@ export class RoomRepository {
         roomNumber,
         hotelId,
       },
+      include: {
+        hotel: true,
+      },
     });
     return room;
   }
@@ -53,7 +56,7 @@ export class RoomRepository {
     return room;
   }
 
-  async update(id: number, updatedUser: Prisma.RoomUpdateInput) {
+  async update(id: string, updatedUser: Prisma.RoomUpdateInput) {
     const updated = await this.prisma.room.update({
       where: { id },
       data: {
@@ -72,7 +75,7 @@ export class RoomRepository {
     return updated;
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     const room = await this.prisma.room.delete({
       where: { id },
       select: {

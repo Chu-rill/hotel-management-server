@@ -10,13 +10,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
-import { Prisma } from '@prisma/client';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { JoiValidationPipe } from 'src/utils/schema-validation/validation.pipe';
 import {
+  CreateBookingDto,
   createBookingValidation,
   deleteBookingValidation,
   getBookingValidation,
+  UpdateBookingDto,
   updateBookingValidation,
 } from './booking.validation';
 import { AdminGuard } from 'src/guard/admin.guard';
@@ -28,7 +29,7 @@ export class BookingController {
   @Post()
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(createBookingValidation, 'body'))
-  create(@Body() createBookingDto: Prisma.BookingCreateInput) {
+  create(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingService.create(createBookingDto);
   }
 
@@ -48,10 +49,7 @@ export class BookingController {
   @Put('/:id')
   @UseGuards(AdminGuard)
   @UsePipes(new JoiValidationPipe(updateBookingValidation, 'params'))
-  update(
-    @Param('id') id: number,
-    @Body() updateBookingDto: Prisma.BookingUpdateInput,
-  ) {
+  update(@Param('id') id: number, @Body() updateBookingDto: UpdateBookingDto) {
     return this.bookingService.update(id, updateBookingDto);
   }
 

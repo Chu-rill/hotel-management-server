@@ -75,7 +75,7 @@ export class RoomService {
     };
   }
 
-  async update(id: number, updateDto: updateRoomDto) {
+  async update(id: string, updateDto: updateRoomDto) {
     const room = await this.roomRepository.update(id, updateDto);
     if (!room) {
       return {
@@ -91,7 +91,7 @@ export class RoomService {
     };
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const room = await this.roomRepository.delete(id);
     if (!room) {
       return {
