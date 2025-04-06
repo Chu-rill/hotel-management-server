@@ -61,8 +61,8 @@ model Staff {
 }
 
 model Hotel {
-  id          String   @id @unique @default(cuid())
-  name        String   @unique
+  id          String    @id @unique @default(cuid())
+  name        String    @unique
   description String?
   address     String
   city        String
@@ -72,9 +72,10 @@ model Hotel {
   rating      Float?
   rooms       Room[]
   staff       Staff[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   reviews     Review[]
+  Booking     Booking[]
 }
 
 model Room {
@@ -115,6 +116,8 @@ model Booking {
   status     BookingStatus
   customer   Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId Int
+  hotel      Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId    String
   room       Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId     String
   payment    Payment?

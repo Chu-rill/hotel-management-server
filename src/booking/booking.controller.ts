@@ -17,20 +17,28 @@ import {
   createBookingValidation,
   deleteBookingValidation,
   getBookingValidation,
+  hotelIdValidation,
   UpdateBookingDto,
   updateBookingValidation,
 } from './booking.validation';
 import { AdminGuard } from 'src/guard/admin.guard';
 
-@Controller('bookings')
+@Controller('bookings/:hotelId')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
   @Post()
   @UseGuards(AuthGuard)
+  @UsePipes(new JoiValidationPipe(hotelIdValidation, 'params'))
   @UsePipes(new JoiValidationPipe(createBookingValidation, 'body'))
-  create(@Body() createBookingDto: CreateBookingDto) {
-    return this.bookingService.create(createBookingDto);
+  create(
+    @Param('hotelId') hotelId: string,
+    @Body() createBookingDto: CreateBookingDto,
+  ) {
+    return this.bookingService.create({
+      ...createBookingDto,
+      hotelId,
+    });
   }
 
   @Get()

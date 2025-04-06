@@ -86,4 +86,35 @@ export class MailService {
       );
     }
   }
+
+  // Send an email when a booking is made
+  async sendBookingEmail(
+    email: string,
+    data: { subject: string; username: string; OTP: string },
+  ): Promise<void> {
+    try {
+      const templateSource = await this.readTemplateFile(
+        this.welcomeTemplatePath,
+      );
+      const emailTemplate = handlebars.compile(templateSource);
+
+      const info = await this.transporter.sendMail({
+        from: this.configService.get<string>('EMAIL_USER'),
+        to: email,
+        subject: data.subject,
+        html: emailTemplate({
+          PlatformName: 'InnkeeperPro',
+          Username: data.username,
+          title: 'Welcome Email',
+          OTP: data.OTP,
+        }),
+      });
+
+      console.log(`Message sent: ${info.response}`);
+    } catch (error) {
+      console.error(
+        `Error sending email with template: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
+    }
+  }
 }

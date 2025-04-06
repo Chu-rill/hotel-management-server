@@ -12,6 +12,7 @@ export class BookingRepository {
     status: BookingStatus,
     customerId: number,
     roomId: string,
+    hotelId: string,
   ) {
     const booking = await this.prisma.booking.create({
       data: {
@@ -20,6 +21,19 @@ export class BookingRepository {
         status,
         customerId,
         roomId,
+        hotelId,
+      },
+      include: {
+        customer: {
+          select: {
+            user: {
+              select: {
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
       },
     });
     return booking;

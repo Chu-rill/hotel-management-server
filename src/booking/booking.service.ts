@@ -1,18 +1,28 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { BookingRepository } from './booking.repository';
 import { CreateBookingDto, UpdateBookingDto } from './booking.validation';
+import { HotelRepository } from 'src/hotel/hotel.repository';
 
 @Injectable()
 export class BookingService {
-  constructor(private bookingRepository: BookingRepository) {}
+  constructor(
+    private bookingRepository: BookingRepository,
+    private hotelRepository: HotelRepository,
+  ) {}
 
   async create(createDto: CreateBookingDto) {
+    const hotel = await this.hotelRepository.findHotelById(createDto.hotelId);
+
+    if (!hotel) {
+      throw new Error('Hotel not found!');
+    }
     const booking = await this.bookingRepository.createBooking(
       createDto.checkIn,
       createDto.checkOut,
       createDto.status,
       createDto.customerId,
       createDto.roomId,
+      createDto.hotelId,
     );
 
     if (!booking) {
