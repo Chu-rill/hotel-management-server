@@ -36,6 +36,7 @@ export type CreateBookingDto = {
   status: BookingStatus;
   customerId: number;
   roomId: string;
+  hotelId: string;
 };
 export const updateBookingValidation = Joi.object({
   checkIn: Joi.date().optional().messages({
@@ -84,4 +85,15 @@ export const deleteBookingValidation = Joi.object({
     'number.positive': 'ID must be a positive number',
     'any.required': 'ID is a required field',
   }),
+});
+
+export const hotelIdValidation = Joi.object({
+  hotelId: Joi.string()
+    .pattern(/^c[a-z0-9]{24}$/) // Matches CUID format
+    .required()
+    .messages({
+      'string.pattern.base': 'ID must be a valid CUID',
+      'string.empty': 'ID is required',
+      'any.required': 'ID is a required field',
+    }),
 });

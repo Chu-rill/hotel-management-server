@@ -4,11 +4,14 @@ import * as fs from 'fs/promises';
 import * as handlebars from 'handlebars';
 import * as path from 'path';
 import { ConfigService } from '@nestjs/config';
+import { last } from 'rxjs';
+import { BookingStatus, RoomType } from '@prisma/client';
 
 @Injectable()
 export class MailService {
   private transporter: nodemailer.Transporter;
   private welcomeTemplatePath: string;
+  private bookingTemplatePath: string;
 
   constructor(private readonly configService: ConfigService) {
     this.transporter = nodemailer.createTransport({
@@ -23,6 +26,7 @@ export class MailService {
     });
 
     this.welcomeTemplatePath = path.join(__dirname, '../../views/welcome.hbs');
+    this.bookingTemplatePath = path.join(__dirname, '../../views/booking.hbs');
   }
 
   // Method to read the email template file based on a path
@@ -76,6 +80,53 @@ export class MailService {
           Username: data.username,
           title: 'Welcome Email',
           OTP: data.OTP,
+        }),
+      });
+
+      console.log(`Message sent: ${info.response}`);
+    } catch (error) {
+      console.error(
+        `Error sending email with template: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
+    }
+  }
+
+  // Send an email when a booking is made
+  async sendBookingEmail(
+    email: string,
+    data: {
+      subject: string;
+      firstname: string;
+      lastname: string;
+      bookingId: string;
+      hotelName: string;
+      checkIn: Date;
+      checkOut: Date;
+      roomType: RoomType;
+      roomNumber: number;
+      status: BookingStatus;
+    },
+  ): Promise<void> {
+    try {
+      const templateSource = await this.readTemplateFile(
+        this.bookingTemplatePath,
+      );
+      const emailTemplate = handlebars.compile(templateSource);
+
+      const info = await this.transporter.sendMail({
+        from: this.configService.get<string>('EMAIL_USER'),
+        to: email,
+        subject: data.subject,
+        html: emailTemplate({
+          firstName: data.firstname,
+          lastName: data.lastname,
+          bookingId: data.bookingId,
+          hotelName: data.hotelName,
+          checkIn: data.checkIn,
+          checkOut: data.checkOut,
+          roomType: data.roomType,
+          roomNumber: data.roomNumber,
+          status: data.status,
         }),
       });
 

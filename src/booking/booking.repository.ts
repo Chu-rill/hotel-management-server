@@ -12,6 +12,7 @@ export class BookingRepository {
     status: BookingStatus,
     customerId: number,
     roomId: string,
+    hotelId: string,
   ) {
     const booking = await this.prisma.booking.create({
       data: {
@@ -20,6 +21,26 @@ export class BookingRepository {
         status,
         customerId,
         roomId,
+        hotelId,
+      },
+      include: {
+        customer: {
+          select: {
+            user: {
+              select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+              },
+            },
+          },
+        },
+        room: {
+          select: {
+            roomtype: true,
+            roomNumber: true,
+          },
+        },
       },
     });
     return booking;
@@ -30,7 +51,7 @@ export class BookingRepository {
     return bookings;
   }
 
-  async findBookingById(id: number) {
+  async findBookingById(id: string) {
     const booking = await this.prisma.booking.findUnique({
       where: {
         id,
@@ -55,7 +76,7 @@ export class BookingRepository {
     return booking;
   }
 
-  async update(id: number, updatedBooking: Prisma.BookingUpdateInput) {
+  async update(id: string, updatedBooking: Prisma.BookingUpdateInput) {
     const updated = await this.prisma.booking.update({
       where: { id },
       data: {
@@ -81,7 +102,7 @@ export class BookingRepository {
     return updated;
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     const booking = await this.prisma.booking.delete({
       where: { id },
       select: {
