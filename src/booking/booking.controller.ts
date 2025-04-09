@@ -47,12 +47,6 @@ export class BookingController {
     return this.bookingService.findAll(hotelId);
   }
 
-  @Get('/unapproved')
-  @UseGuards(AdminGuard)
-  findUnapproved(@Param('hotelId') hotelId: string) {
-    return this.bookingService.findUnapproved(hotelId);
-  }
-
   @Get('/:id')
   @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(getBookingValidation, 'params'))
