@@ -43,8 +43,14 @@ export class BookingController {
 
   @Get()
   @UseGuards(AdminGuard)
-  findAll() {
-    return this.bookingService.findAll();
+  findAll(@Param('hotelId') hotelId: string) {
+    return this.bookingService.findAll(hotelId);
+  }
+
+  @Get('/unapproved')
+  @UseGuards(AdminGuard)
+  findUnapproved(@Param('hotelId') hotelId: string) {
+    return this.bookingService.findUnapproved(hotelId);
   }
 
   @Get('/:id')
