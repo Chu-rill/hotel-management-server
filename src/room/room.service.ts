@@ -3,12 +3,14 @@ import { Prisma } from '@prisma/client';
 import { RoomRepository } from './room.repository';
 import { CreateRoomDto, updateRoomDto } from './room.validation';
 import { HotelRepository } from 'src/hotel/hotel.repository';
+import { CloudinaryService } from 'src/infra/cloudinary/cloudinary.service';
 
 @Injectable()
 export class RoomService {
   constructor(
     private roomRepository: RoomRepository,
     private hotelRepository: HotelRepository,
+    private cloudinaryService: CloudinaryService,
   ) {}
   async create(createDto: CreateRoomDto) {
     const hotel = await this.hotelRepository.findHotelById(createDto.hotelId);
@@ -105,5 +107,45 @@ export class RoomService {
       message: 'Room deleted successfully ',
       data: room,
     };
+  }
+
+  async uploadRoomImages(
+    roomId: string,
+    hotelId: string,
+    files: Express.Multer.File[],
+  ) {
+    if (!files || files.length === 0) {
+      return {
+        status: 'error',
+        error: true,
+        statusCode: 400,
+        message: 'No files uploaded',
+      };
+    }
+    try {
+      const uploadResults = await Promise.all(
+        files.map((file) => this.cloudinaryService.uploadImages(file)),
+      );
+
+      const imageUrls = uploadResults.map((result) => result.secure_url);
+
+      // Update room images with the uploaded image URLs
+      const room = await this.roomRepository.update(roomId, {
+        images: imageUrls,
+      });
+
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Images uploaded successfully',
+        data: room,
+      };
+    } catch (error) {
+      console.error('Upload error:', error);
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Error uploading room images',
+        data: null,
+      };
+    }
   }
 }

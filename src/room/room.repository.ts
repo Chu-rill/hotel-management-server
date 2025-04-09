@@ -70,6 +70,7 @@ export class RoomRepository {
         status: true,
         hotel: true,
         amenity: true,
+        images: true,
       },
     });
     return updated;

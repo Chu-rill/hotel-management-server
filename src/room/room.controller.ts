@@ -9,6 +9,9 @@ import {
   UsePipes,
   Put,
   Query,
+  UseInterceptors,
+  UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { RoomService } from './room.service';
 import { AdminGuard } from 'src/guard/admin.guard';
@@ -24,6 +27,8 @@ import {
   updateRoomValidation,
 } from './room.validation';
 import { AuthGuard } from 'src/guard/auth.guard';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { AuthRequest } from 'src/types/auth.request';
 
 @Controller('hotels/:hotelId/rooms')
 export class RoomController {
@@ -75,5 +80,16 @@ export class RoomController {
   @UsePipes(new JoiValidationPipe(deleteRoomValidation, 'params'))
   remove(@Param('id') id: string) {
     return this.roomService.remove(id);
+  }
+
+  @Post('/:roomId/images')
+  @UseGuards(AdminGuard)
+  @UseInterceptors(FilesInterceptor('files', 10)) // 10 is max number of files
+  async uploadImages(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Param('roomId') roomId: string,
+    @Param('hotelId') hotelId: string,
+  ) {
+    return this.roomService.uploadRoomImages(roomId, hotelId, files);
   }
 }
