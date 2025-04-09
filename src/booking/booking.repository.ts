@@ -46,8 +46,22 @@ export class BookingRepository {
     return booking;
   }
 
-  async findBookings() {
-    const bookings = await this.prisma.booking.findMany();
+  async findBookings(id: string) {
+    const bookings = await this.prisma.booking.findMany({
+      where: {
+        hotelId: id,
+      },
+    });
+    return bookings;
+  }
+
+  async unApprovedBookings(id: string) {
+    const bookings = await this.prisma.booking.findMany({
+      where: {
+        hotelId: id,
+        approved: false,
+      },
+    });
     return bookings;
   }
 
