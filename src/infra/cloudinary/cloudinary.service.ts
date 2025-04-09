@@ -24,4 +24,23 @@ export class CloudinaryService {
       uploadStream.end(file.buffer);
     });
   }
+
+  async uploadImages(file: Express.Multer.File): Promise<UploadApiResponse> {
+    return new Promise((resolve, reject) => {
+      const uploadStream = this.cloudinary.uploader.upload_stream(
+        {
+          folder: 'room_images',
+          // width: 150,
+          // height: 150,
+          crop: 'fill',
+          timeout: 60000,
+        }, // Adjust folder as needed
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        },
+      );
+      uploadStream.end(file.buffer);
+    });
+  }
 }
