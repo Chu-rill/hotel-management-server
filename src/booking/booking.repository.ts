@@ -55,16 +55,6 @@ export class BookingRepository {
     return bookings;
   }
 
-  async unApprovedBookings(id: string) {
-    const bookings = await this.prisma.booking.findMany({
-      where: {
-        hotelId: id,
-        approved: false,
-      },
-    });
-    return bookings;
-  }
-
   async findBookingById(id: string) {
     const booking = await this.prisma.booking.findUnique({
       where: {

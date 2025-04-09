@@ -35,20 +35,20 @@ export class BookingService {
       };
     }
 
-    // const data = {
-    //   subject: 'Booking Confirmation',
-    //   firstname: booking.customer.user.firstName,
-    //   lastname: booking.customer.user.lastName,
-    //   bookingId: booking.id,
-    //   hotelName: hotel.name,
-    //   checkIn: booking.checkIn,
-    //   checkOut: booking.checkOut,
-    //   roomType: booking.room.roomtype,
-    //   roomNumber: booking.room.roomNumber,
-    //   status: booking.status,
-    // };
+    const data = {
+      subject: 'Booking Confirmation',
+      firstname: booking.customer.user.firstName,
+      lastname: booking.customer.user.lastName,
+      bookingId: booking.id,
+      hotelName: hotel.name,
+      checkIn: booking.checkIn,
+      checkOut: booking.checkOut,
+      roomType: booking.room.roomtype,
+      roomNumber: booking.room.roomNumber,
+      status: booking.status,
+    };
 
-    // await this.mailService.sendBookingEmail(booking.customer.user.email, data);
+    await this.mailService.sendBookingEmail(booking.customer.user.email, data);
 
     return {
       statusCode: HttpStatus.CREATED,
@@ -71,21 +71,6 @@ export class BookingService {
     return {
       statusCode: HttpStatus.OK,
       message: 'Bookings retrieved successfully',
-      data: bookings,
-    };
-  }
-  async findUnapproved(id: string) {
-    const bookings = await this.bookingRepository.unApprovedBookings(id);
-    if (!bookings || bookings.length === 0) {
-      return {
-        statusCode: HttpStatus.NOT_FOUND,
-        message: 'No unapproved bookings found',
-        data: null,
-      };
-    }
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Unapproved bookings retrieved successfully',
       data: bookings,
     };
   }
