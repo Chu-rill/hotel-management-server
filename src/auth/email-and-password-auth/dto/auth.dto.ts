@@ -2,8 +2,7 @@ import { Role } from '@prisma/client';
 export class CreateAuthDto {}
 
 export type SignUpDto = {
-  firstName: string;
-  lastName: string;
+  username: string;
   email: string;
   password: string;
   phone?: string;

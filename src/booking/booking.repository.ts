@@ -28,8 +28,7 @@ export class BookingRepository {
           select: {
             user: {
               select: {
-                firstName: true,
-                lastName: true,
+                username: true,
                 email: true,
               },
             },

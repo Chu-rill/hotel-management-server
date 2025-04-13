@@ -7,8 +7,7 @@ export class UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser(
-    firstName: string,
-    lastName: string,
+    username: string,
     email: string,
     password: string,
     phone: string,
@@ -16,8 +15,7 @@ export class UserRepository {
   ) {
     const user = await this.prisma.user.create({
       data: {
-        firstName,
-        lastName,
+        username,
         email,
         password, // Ensure to hash the password in production
         phone,
@@ -35,8 +33,7 @@ export class UserRepository {
   ) {
     const user = await this.prisma.user.create({
       data: {
-        firstName,
-        lastName,
+        username: `${firstName} ${lastName}`, // Combine firstName and lastName to create a username
         email,
         profile,
       },
@@ -83,8 +80,7 @@ export class UserRepository {
       },
       select: {
         id: true,
-        firstName: true,
-        lastName: true,
+        username: true,
         email: true,
         phone: true,
         role: true,
@@ -107,8 +103,7 @@ export class UserRepository {
       },
       select: {
         id: true,
-        firstName: true,
-        lastName: true,
+        username: true,
         email: true,
         password: true,
         profile: true,
@@ -133,8 +128,7 @@ export class UserRepository {
       where: { id },
       select: {
         id: true,
-        firstName: true,
-        lastName: true,
+        username: true,
         email: true,
         password: true,
         phone: true,

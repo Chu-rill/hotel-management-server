@@ -96,8 +96,7 @@ export class MailService {
     email: string,
     data: {
       subject: string;
-      firstname: string;
-      lastname: string;
+      username: string;
       bookingId: string;
       hotelName: string;
       checkIn: Date;
@@ -118,8 +117,7 @@ export class MailService {
         to: email,
         subject: data.subject,
         html: emailTemplate({
-          firstName: data.firstname,
-          lastName: data.lastname,
+          userName: data.username,
           bookingId: data.bookingId,
           hotelName: data.hotelName,
           checkIn: data.checkIn,

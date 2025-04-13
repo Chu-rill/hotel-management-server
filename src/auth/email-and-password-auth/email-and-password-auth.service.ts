@@ -29,8 +29,7 @@ export class AuthService {
     }
     const hassedPassword = await encrypt(dto.password);
     const user = await this.userRespository.createUser(
-      dto.firstName,
-      dto.lastName,
+      dto.username,
       dto.email,
       hassedPassword,
       dto.phone,
@@ -48,7 +47,7 @@ export class AuthService {
 
     const data = {
       subject: 'InnkeeperPro validation',
-      username: user.firstName,
+      username: user.username,
       OTP: otp,
     };
 
@@ -62,8 +61,7 @@ export class AuthService {
       message: 'user signup',
       data: {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        username: user.username,
         email: user.email,
         phone: user.phone,
         role: user.role,
@@ -103,7 +101,7 @@ export class AuthService {
       message: 'login successful',
       data: {
         id: user.id,
-        firstName: user.firstName,
+        userName: user.username,
       },
       token: token,
     };
@@ -142,7 +140,7 @@ export class AuthService {
 
     const data = {
       subject: 'InnkeeperPro validation',
-      username: user.firstName,
+      username: user.username,
       OTP: otp,
     };
 

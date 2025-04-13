@@ -1,0 +1,247 @@
+{
+  "users": [
+    {
+      "id": "cm8aaxizh0000ij1tuhbdmi27",
+      "firstName": "Churchill",
+      "lastName": "Daniel",
+      "email": "churchilldaniel687@gmail.com",
+      "password": null,
+      "phone": null,
+      "profile": "https://res.cloudinary.com/dxgwbxcgq/image/upload/v1742067320/profiles/ydup6itmnzhovjao7ysg.jpg",
+      "role": "CUSTOMER",
+      "isVerified": true,
+      "createdAt": "2025-03-15T14:28:10.973Z",
+      "updatedAt": "2025-03-15T19:35:21.818Z"
+    },
+    {
+      "id": "cm8kb6sr90000ijlyvg4r06vw",
+      "firstName": "admin",
+      "lastName": "admin",
+      "email": "admin@gmail.com",
+      "password": "$2b$10$DK74wFVYCk5P5SiEKf9N9.kAXaFQcHIz7m.Lh/8SVHqL3TEamKuCy",
+      "phone": "+2348150442746",
+      "profile": null,
+      "role": "ADMIN",
+      "isVerified": true,
+      "createdAt": "2025-03-22T14:33:05.302Z",
+      "updatedAt": "2025-03-22T14:34:09.975Z"
+    },
+    {
+      "id": "cm9637ujf0002ijj6yqqt6s1j",
+      "firstName": "Churchill",
+      "lastName": "Daniel",
+      "email": "churchillrimamskep@gmail.com",
+      "password": null,
+      "phone": null,
+      "profile": "https://lh3.googleusercontent.com/a/ACg8ocJqCJAE_ytaLC9NAXmce_sknN3FUHTgush29agCZYOWJdaAfgUj=s96-c",
+      "role": "CUSTOMER",
+      "isVerified": true,
+      "createdAt": "2025-04-06T20:20:53.210Z",
+      "updatedAt": "2025-04-06T20:20:53.339Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "cm963gma40005ij8ncl0pqaq9",
+      "checkIn": "2025-04-10T14:00:00.000Z",
+      "checkOut": "2025-04-15T11:00:00.000Z",
+      "status": "VALID",
+      "customerId": 14,
+      "hotelId": "cm8kcq53b0003ijnjom09mtv4",
+      "roomId": "cm94743vf0003ijzc9avsvfr9",
+      "createdAt": "2025-04-06T20:27:42.412Z",
+      "updatedAt": "2025-04-06T20:27:42.412Z"
+    },
+    {
+      "id": "cm9a9veon0001ij69p5uj0rxb",
+      "checkIn": "2025-04-10T14:00:00.000Z",
+      "checkOut": "2025-04-15T11:00:00.000Z",
+      "status": "VALID",
+      "customerId": 14,
+      "hotelId": "cm8kcq53b0003ijnjom09mtv4",
+      "roomId": "cm94743vf0003ijzc9avsvfr9",
+      "createdAt": "2025-04-09T18:38:14.808Z",
+      "updatedAt": "2025-04-09T18:38:14.808Z"
+    },
+    {
+      "id": "cm991jhhx0001ij3rx70p740p",
+      "checkIn": "2025-04-10T14:00:00.000Z",
+      "checkOut": "2025-04-15T11:00:00.000Z",
+      "status": "VALID",
+      "customerId": 14,
+      "hotelId": "cm8kcq53b0003ijnjom09mtv4",
+      "roomId": "cm94743vf0003ijzc9avsvfr9",
+      "createdAt": "2025-04-08T21:57:15.477Z",
+      "updatedAt": "2025-04-09T18:48:19.808Z"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "cm94734e70001ijzcocvklacr",
+      "roomNumber": 1,
+      "roomtype": "SINGLE",
+      "price": 1500,
+      "images": [],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcq53b0003ijnjom09mtv4",
+      "createdAt": "2025-04-05T12:33:38.815Z",
+      "updatedAt": "2025-04-05T12:33:38.815Z",
+      "amenityId": null
+    },
+    {
+      "id": "cm9484ynu0001ijnkvv3z8b5h",
+      "roomNumber": 4,
+      "roomtype": "SINGLE",
+      "price": 1000,
+      "images": [],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcpz5d0001ijnj281dd82o",
+      "createdAt": "2025-04-05T13:03:04.315Z",
+      "updatedAt": "2025-04-05T13:03:04.315Z",
+      "amenityId": null
+    },
+    {
+      "id": "cm9480mhu0007ijzc50anaue1",
+      "roomNumber": 1,
+      "roomtype": "SUITE",
+      "price": 30000,
+      "images": [],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcpz5d0001ijnj281dd82o",
+      "createdAt": "2025-04-05T12:59:41.922Z",
+      "updatedAt": "2025-04-05T13:03:57.681Z",
+      "amenityId": null
+    },
+    {
+      "id": "cm94816h90009ijzc8tppbu9b",
+      "roomNumber": 2,
+      "roomtype": "DOUBLE",
+      "price": 3000,
+      "images": [],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcpz5d0001ijnj281dd82o",
+      "createdAt": "2025-04-05T13:00:07.821Z",
+      "updatedAt": "2025-04-05T13:03:57.681Z",
+      "amenityId": null
+    },
+    {
+      "id": "cm94743vf0003ijzc9avsvfr9",
+      "roomNumber": 2,
+      "roomtype": "DOUBLE",
+      "price": 5000,
+      "images": [],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcq53b0003ijnjom09mtv4",
+      "createdAt": "2025-04-05T12:34:24.795Z",
+      "updatedAt": "2025-04-05T13:03:57.681Z",
+      "amenityId": null
+    },
+    {
+      "id": "cm9474jry0005ijzc0hqith3j",
+      "roomNumber": 3,
+      "roomtype": "SUITE",
+      "price": 20000,
+      "images": [],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcq53b0003ijnjom09mtv4",
+      "createdAt": "2025-04-05T12:34:45.406Z",
+      "updatedAt": "2025-04-05T13:03:57.681Z",
+      "amenityId": null
+    },
+    {
+      "id": "cm9481ld2000bijzcl4begf3s",
+      "roomNumber": 3,
+      "roomtype": "SINGLE",
+      "price": 9000,
+      "images": [
+        "https://res.cloudinary.com/dxgwbxcgq/image/upload/v1744229899/room_images/dpoohwvllllgz7fdccwp.jpg",
+        "https://res.cloudinary.com/dxgwbxcgq/image/upload/v1744229897/room_images/w0bvezzmg00inhhdbufa.jpg"
+      ],
+      "status": "AVAILABLE",
+      "hotelId": "cm8kcpz5d0001ijnj281dd82o",
+      "createdAt": "2025-04-05T13:00:27.110Z",
+      "updatedAt": "2025-04-09T20:18:20.528Z",
+      "amenityId": null
+    }
+  ],
+  "hotels": [
+    {
+      "id": "cm8kcpz5d0001ijnj281dd82o",
+      "name": "Paradise Inn",
+      "description": null,
+      "address": "Ring Road, Ibadan",
+      "city": "Ibadan",
+      "country": "Nigeria",
+      "phone": "+2348123456789",
+      "email": "paradiseinn@gmail.com",
+      "rating": null,
+      "createdAt": "2025-03-22T15:15:59.666Z",
+      "updatedAt": "2025-03-22T15:15:59.666Z"
+    },
+    {
+      "id": "cm8kcq2py0002ijnjykcidwec",
+      "name": "Savannah Luxury Hotel",
+      "description": null,
+      "address": "Independence Layout, Enugu",
+      "city": "Enugu",
+      "country": "Nigeria",
+      "phone": "+2348087654321",
+      "email": "savannahluxury@gmail.com",
+      "rating": null,
+      "createdAt": "2025-03-22T15:16:04.294Z",
+      "updatedAt": "2025-03-22T15:16:04.294Z"
+    },
+    {
+      "id": "cm8kcq53b0003ijnjom09mtv4",
+      "name": "Ocean Breeze Resort",
+      "description": null,
+      "address": "Lekki Phase 1, Lagos",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "phone": "+2347012345678",
+      "email": "oceanbreeze@gmail.com",
+      "rating": null,
+      "createdAt": "2025-03-22T15:16:07.367Z",
+      "updatedAt": "2025-03-22T15:16:07.367Z"
+    },
+    {
+      "id": "cm8kcq8bk0004ijnjlt8eybh9",
+      "name": "Hilltop Suites",
+      "description": null,
+      "address": "Gwarinpa Estate, Abuja",
+      "city": "Abuja",
+      "country": "Nigeria",
+      "phone": "+2348098765432",
+      "email": "hilltopsuites@gmail.com",
+      "rating": null,
+      "createdAt": "2025-03-22T15:16:11.552Z",
+      "updatedAt": "2025-03-22T15:16:11.552Z"
+    },
+    {
+      "id": "cm8kcqaxs0005ijnjypn8z6ly",
+      "name": "Grand Oasis Hotel",
+      "description": null,
+      "address": "15 Victoria Island, Lagos",
+      "city": "Lagos",
+      "country": "Nigeria",
+      "phone": "+2348023456789",
+      "email": "grandoasis@gmail.com",
+      "rating": null,
+      "createdAt": "2025-03-22T15:16:14.945Z",
+      "updatedAt": "2025-03-22T15:16:14.945Z"
+    },
+    {
+      "id": "cm8kcoq7q0000ijnjji9wpuwh",
+      "name": "Emerald Palace Hotel",
+      "description": null,
+      "address": "Airport Road, Kano",
+      "city": "Kano",
+      "country": "Nigeria",
+      "phone": "+2348067890123",
+      "email": "emeraldpalace@gmail.com",
+      "rating": 4.6,
+      "createdAt": "2025-03-22T15:15:01.430Z",
+      "updatedAt": "2025-03-22T15:54:32.100Z"
+    }
+  ]
+}
