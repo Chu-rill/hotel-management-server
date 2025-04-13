@@ -10,5 +10,6 @@ import { HotelModule } from 'src/hotel/hotel.module';
   controllers: [BookingController],
   providers: [BookingService, BookingRepository],
   imports: [DatabaseModule, MailModule, HotelModule],
+  exports: [BookingService],
 })
 export class BookingModule {}
