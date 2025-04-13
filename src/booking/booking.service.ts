@@ -37,8 +37,7 @@ export class BookingService {
 
     const data = {
       subject: 'Booking Confirmation',
-      firstname: booking.customer.user.firstName,
-      lastname: booking.customer.user.lastName,
+      username: booking.customer.user.username,
       bookingId: booking.id,
       hotelName: hotel.name,
       checkIn: booking.checkIn,
