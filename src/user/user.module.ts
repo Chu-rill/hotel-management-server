@@ -8,7 +8,7 @@ import { CloudinaryModule } from 'src/infra/cloudinary/cloudinary.module';
 @Module({
   controllers: [UserController],
   providers: [UserService, UserRepository],
-  exports: [UserRepository],
+  exports: [UserRepository, UserService],
   imports: [DatabaseModule, CloudinaryModule],
 })
 export class UserModule {}

@@ -8,5 +8,6 @@ import { DatabaseModule } from 'src/infra/db/database.module';
   controllers: [ReviewController],
   providers: [ReviewService, ReviewRepository],
   imports: [DatabaseModule],
+  exports: [ReviewService],
 })
 export class ReviewModule {}

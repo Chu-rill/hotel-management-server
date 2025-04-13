@@ -10,5 +10,6 @@ import { CloudinaryModule } from 'src/infra/cloudinary/cloudinary.module';
   controllers: [RoomController],
   providers: [RoomService, RoomRepository],
   imports: [DatabaseModule, HotelModule, CloudinaryModule],
+  exports: [RoomService],
 })
 export class RoomModule {}

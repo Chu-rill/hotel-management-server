@@ -23,12 +23,12 @@ import {
 } from './booking.validation';
 import { AdminGuard } from 'src/guard/admin.guard';
 
+@UseGuards(AuthGuard)
 @Controller('bookings/:hotelId')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(hotelIdValidation, 'params'))
   @UsePipes(new JoiValidationPipe(createBookingValidation, 'body'))
   create(
@@ -41,28 +41,13 @@ export class BookingController {
     });
   }
 
-  @Get()
-  @UseGuards(AdminGuard)
-  findAll(@Param('hotelId') hotelId: string) {
-    return this.bookingService.findAll(hotelId);
-  }
-
   @Get('/:id')
-  @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(getBookingValidation, 'params'))
   findOne(@Param('id') id: string) {
     return this.bookingService.findOne(id);
   }
 
-  @Put('/:id')
-  @UseGuards(AdminGuard)
-  @UsePipes(new JoiValidationPipe(updateBookingValidation, 'params'))
-  update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
-    return this.bookingService.update(id, updateBookingDto);
-  }
-
   @Delete('/:id')
-  @UseGuards(AuthGuard)
   @UsePipes(new JoiValidationPipe(deleteBookingValidation, 'params'))
   remove(@Param('id') id: string) {
     return this.bookingService.remove(id);
