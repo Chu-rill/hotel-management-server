@@ -2,15 +2,10 @@ import * as Joi from 'joi';
 
 // signup validator schema
 export const signup = Joi.object({
-  firstName: Joi.string().required().messages({
-    'string.base': 'firstName must be a string',
-    'string.empty': 'firstName is required',
-    'any.required': 'firstName is a required field',
-  }),
-  lastName: Joi.string().required().messages({
-    'string.base': 'lastName must be a string',
-    'string.empty': 'lastName is required',
-    'any.required': 'lastName is a required field',
+  username: Joi.string().required().messages({
+    'string.base': 'username must be a string',
+    'string.empty': 'username is required',
+    'any.required': 'username is a required field',
   }),
   password: Joi.string().required().min(6).messages({
     'string.base': 'Password must be a string',
@@ -27,7 +22,7 @@ export const signup = Joi.object({
   phone: Joi.string().optional().messages({
     'string.base': 'Phone Number must be a string',
   }),
-  role: Joi.string().required().messages({
+  role: Joi.string().optional().messages({
     'string.base': 'role Name must be a string',
     'string.empty': 'role Name is required',
     'any.required': 'role Name is a required field',
