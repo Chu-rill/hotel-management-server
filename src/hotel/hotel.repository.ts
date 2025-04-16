@@ -41,6 +41,7 @@ export class HotelRepository {
         email: true,
         description: true,
         rating: true,
+        imageUrl: true,
       },
     });
     return hotel;

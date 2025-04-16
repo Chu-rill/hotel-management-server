@@ -175,13 +175,24 @@ export class AuthService {
     // Mark user as verified
     await this.userRespository.verifyUser(dto.email);
 
+    // Create a token and return user data similar to login method
+    let { password: userPassword, ...userWithoutPassword } = user;
+    const payload = {
+      ...userWithoutPassword, // Spread the rest of the user properties
+    };
+
+    const token = await this.jwt.signAsync(payload);
+
     return {
       statusCode: HttpStatus.OK,
       message: 'User verified successfully',
-      data: null,
+      data: {
+        id: user.id,
+        userName: user.username,
+      },
+      token: token,
     };
   }
-
   async resendOTP(dto: ResendDto) {
     const user = await this.userRespository.findUserByEmail(dto.email);
     if (!user) {

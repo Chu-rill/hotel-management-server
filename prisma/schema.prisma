@@ -68,6 +68,7 @@ model Hotel {
   country     String
   phone       String
   email       String
+  imageUrl    String?
   rating      Float?
   rooms       Room[]
   staff       Staff[]
