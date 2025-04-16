@@ -54,6 +54,7 @@ export class AdminController {
     private readonly userService: UserService,
   ) {}
 
+  //HOTEL
   //create a hotel
   @Post('/hotels')
   @UsePipes(new JoiValidationPipe(createHotelValidation, 'body'))
@@ -78,6 +79,7 @@ export class AdminController {
     return this.hotelService.remove(id);
   }
 
+  //BOOKING
   //get booking for a single hotel
   @Get('/bookings/:hotelId')
   findAll(@Param('hotelId') hotelId: string) {
@@ -100,6 +102,7 @@ export class AdminController {
     return this.reviewService.findAll();
   }
 
+  //ROOMS
   //create a room
   @Post('/hotels/:hotelId/rooms')
   @UsePipes(new JoiValidationPipe(hotelIdValidation, 'params'))
