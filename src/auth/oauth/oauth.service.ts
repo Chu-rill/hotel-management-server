@@ -35,7 +35,7 @@ export class OauthService {
       await this.userRepository.verifyUser(user.email);
     }
 
-    const payload = { id: user.id, email: user.email };
+    const payload = { id: user.id, username: user.username };
     const token = await this.jwt.signAsync(payload);
 
     return {

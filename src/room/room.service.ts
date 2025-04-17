@@ -58,15 +58,12 @@ export class RoomService {
     };
   }
 
-  async findOneById(roomNumber: number, hotelId: string) {
-    const room = await this.roomRepository.findRoomByRoomNumber(
-      roomNumber,
-      hotelId,
-    );
+  async findOneById(id: string, hotelId: string) {
+    const room = await this.roomRepository.findRoomByRoomId(id, hotelId);
     if (!room) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
-        message: `Room with Room Number ${roomNumber} not found`,
+        message: `Room with Room Number ${id} not found`,
         data: null,
       };
     }
