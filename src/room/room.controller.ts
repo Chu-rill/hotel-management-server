@@ -23,11 +23,10 @@ export class RoomController {
     return this.roomService.findAll(hotelId);
   }
 
-  //get a single room by the roomNumber
+  //get a single room by the roomId
   @Get('/:id')
   @UsePipes(new JoiValidationPipe(getRoomValidation, 'params'))
-  findOne(@Param('id') id: number, @Query('hotelId') hotelId: string) {
-    let roomNumber = parseInt(id.toString());
-    return this.roomService.findOneById(roomNumber, hotelId);
+  findOne(@Param('id') id: string, @Query('hotelId') hotelId: string) {
+    return this.roomService.findOneById(id, hotelId);
   }
 }

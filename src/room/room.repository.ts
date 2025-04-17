@@ -35,11 +35,11 @@ export class RoomRepository {
     return room;
   }
 
-  async findRoomByRoomNumber(roomNumber: number, hotelId: string) {
+  async findRoomByRoomId(id: string, hotelId: string) {
     const room = await this.prisma.room.findFirst({
       where: {
         AND: [
-          { roomNumber },
+          { id },
           { hotelId }, // Assuming your Room model has a hotelId field
         ],
       },
@@ -51,6 +51,7 @@ export class RoomRepository {
         status: true,
         hotel: true,
         amenity: true,
+        images: true,
       },
     });
     return room;
