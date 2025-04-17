@@ -24,7 +24,41 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a Hotel Management System built with NestJS, a progressive Node.js framework for building efficient and scalable server-side applications. It provides a comprehensive set of features for managing hotels, including booking, room management, user authentication, and more.
+
+## Tech Stack
+
+- [NestJS](https://nestjs.com): A framework for building efficient, scalable Node.js server-side applications.
+- [Prisma](https://www.prisma.io): A modern database toolkit for Node.js and TypeScript.
+- [PostgreSQL](https://www.postgresql.org/): A powerful, open-source relational database system.
+- [bcrypt](https://www.npmjs.com/package/bcrypt): A library for hashing passwords.
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken): A library for creating JSON Web Tokens.
+- [nodemailer](https://nodemailer.com/): A library for sending emails.
+
+## Features
+
+- User authentication and authorization
+- Hotel and room management
+- Booking management
+- Review management
+- Admin panel
+- OTP verification
+- Email notifications
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org) (>= 18.0)
+- [npm](https://www.npmjs.com/) (>= 8.0)
+- [PostgreSQL](https://www.postgresql.org/)
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+cd hotel-management-server
+```
 
 ## Project setup
 
