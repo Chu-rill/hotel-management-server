@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api/v1');
   const limiter = rateLimit({
-    max: 10000, // 10,000 requests
+    max: 100, // 100 requests
     windowMs: 60 * 60 * 1000, // 1 hour
     message:
       'We have received too many requests from this IP. Please try again after one hour.',
