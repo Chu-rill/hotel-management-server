@@ -17,24 +17,28 @@ export const createBookingValidation = Joi.object({
       'Status must be one of [PENDING, CONFIRMED, CANCELLED, COMPLETED]',
     'any.required': 'Status is a required field',
   }),
-  customerId: Joi.number().integer().positive().optional().messages({
-    'number.base': 'Customer ID must be a valid number',
-    'number.integer': 'Customer ID must be an integer',
-    'number.positive': 'Customer ID must be a positive number',
-    'any.required': 'Customer ID is a required field',
-  }),
-  roomId: Joi.string().required().messages({
-    'number.base': 'Room ID must be a valid number',
-    'number.integer': 'Room ID must be an integer',
-    'number.positive': 'Room ID must be a positive number',
-    'any.required': 'Room ID is a required field',
-  }),
+  userId: Joi.string()
+    .pattern(/^c[a-z0-9]{24}$/) // Matches CUID format
+    .required()
+    .messages({
+      'string.pattern.base': 'ID must be a valid CUID',
+      'string.empty': 'ID is required',
+      'any.required': 'ID is a required field',
+    }),
+  roomId: Joi.string()
+    .pattern(/^c[a-z0-9]{24}$/) // Matches CUID format
+    .required()
+    .messages({
+      'string.pattern.base': 'ID must be a valid CUID',
+      'string.empty': 'ID is required',
+      'any.required': 'ID is a required field',
+    }),
 });
 export type CreateBookingDto = {
   checkIn: Date;
   checkOut: Date;
   status: BookingStatus;
-  customerId: number;
+  userId: string;
   roomId: string;
   hotelId: string;
 };
@@ -51,7 +55,7 @@ export const updateBookingValidation = Joi.object({
     'any.only':
       'Status must be one of [PENDING, CONFIRMED, CANCELLED, COMPLETED]',
   }),
-  customerId: Joi.number().integer().positive().optional().messages({
+  userId: Joi.number().integer().positive().optional().messages({
     'number.base': 'Customer ID must be a valid number',
     'number.integer': 'Customer ID must be an integer',
     'number.positive': 'Customer ID must be a positive number',
@@ -66,7 +70,7 @@ export type UpdateBookingDto = {
   checkIn?: Date;
   checkOut?: Date;
   status?: BookingStatus;
-  customerId?: number;
+  userId?: string;
   roomId?: string;
 };
 export const getBookingValidation = Joi.object({

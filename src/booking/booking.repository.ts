@@ -10,7 +10,7 @@ export class BookingRepository {
     checkIn: Date,
     checkOut: Date,
     status: BookingStatus,
-    customerId: number,
+    userId: string,
     roomId: string,
     hotelId: string,
   ) {
@@ -19,19 +19,25 @@ export class BookingRepository {
         checkIn,
         checkOut,
         status,
-        customerId,
+        userId,
         roomId,
         hotelId,
       },
       include: {
-        customer: {
+        // customer: {
+        //   select: {
+        //     user: {
+        //       select: {
+        //         username: true,
+        //         email: true,
+        //       },
+        //     },
+        //   },
+        // },
+        user: {
           select: {
-            user: {
-              select: {
-                username: true,
-                email: true,
-              },
-            },
+            username: true,
+            email: true,
           },
         },
         room: {
@@ -64,11 +70,12 @@ export class BookingRepository {
         checkIn: true,
         checkOut: true,
         status: true,
-        customer: {
-          select: {
-            id: true, // Select the customerId
-          },
-        },
+        // customer: {
+        //   select: {
+        //     id: true, // Select the customerId
+        //   },
+        // },
+        userId: true,
         room: {
           select: {
             id: true, // Select the customerId
@@ -90,9 +97,9 @@ export class BookingRepository {
         checkIn: true,
         checkOut: true,
         status: true,
-        customer: {
+        user: {
           select: {
-            id: true, // Select the customerId
+            id: true, // Select the userId
           },
         },
         room: {
@@ -113,9 +120,9 @@ export class BookingRepository {
         checkIn: true,
         checkOut: true,
         status: true,
-        customer: {
+        user: {
           select: {
-            id: true, // Select the customerId
+            id: true, // Select the userId
           },
         },
         room: {

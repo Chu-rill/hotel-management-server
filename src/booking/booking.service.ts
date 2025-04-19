@@ -22,7 +22,7 @@ export class BookingService {
       createDto.checkIn,
       createDto.checkOut,
       createDto.status,
-      createDto.customerId,
+      createDto.userId,
       createDto.roomId,
       createDto.hotelId,
     );
@@ -37,7 +37,7 @@ export class BookingService {
 
     const data = {
       subject: 'Booking Confirmation',
-      username: booking.customer.user.username,
+      username: booking.user.username,
       bookingId: booking.id,
       hotelName: hotel.name,
       checkIn: booking.checkIn,
@@ -47,7 +47,7 @@ export class BookingService {
       status: booking.status,
     };
 
-    await this.mailService.sendBookingEmail(booking.customer.user.email, data);
+    await this.mailService.sendBookingEmail(booking.user.email, data);
 
     return {
       statusCode: HttpStatus.CREATED,
