@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,8 @@ async function bootstrap() {
   });
   app.use(limiter);
   app.use(helmet());
+  app.use(bodyParser.json({ limit: '50mb' }));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.enableCors({
     origin: '*', // Your frontend URL, default to *
     methods: '*',
