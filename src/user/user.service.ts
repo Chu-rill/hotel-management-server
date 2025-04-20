@@ -8,12 +8,22 @@ export class UserService {
     private userRepository: UserRepository,
     private cloudinaryService: CloudinaryService,
   ) {}
-  // create(createUserDto: CreateUserDto) {
-  //   return 'This action adds a new user';
-  // }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const users = await this.userRepository.findUsers();
+    if (!users) {
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'No users found',
+        data: null,
+      };
+    }
+    console.log(users);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Users retrieved successfully',
+      data: users,
+    };
   }
 
   async getUser(id: string) {
