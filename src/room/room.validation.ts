@@ -105,10 +105,12 @@ export const getHotelValidation = Joi.object({
 });
 
 export const deleteRoomValidation = Joi.object({
-  id: Joi.number().integer().positive().required().messages({
-    'number.base': 'ID must be a valid number',
-    'number.integer': 'ID must be an integer',
-    'number.positive': 'ID must be a positive number',
-    'any.required': 'ID is a required field',
-  }),
+  id: Joi.string()
+    .pattern(/^c[a-z0-9]{24}$/) // Matches CUID format
+    .required()
+    .messages({
+      'string.pattern.base': 'ID must be a valid CUID',
+      'string.empty': 'ID is required',
+      'any.required': 'ID is a required field',
+    }),
 });
