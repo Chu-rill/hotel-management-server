@@ -144,7 +144,6 @@ export class AdminController {
 
   //get all users
   @Get('/users')
-  @UseGuards(AdminGuard)
   async findAllUsers() {
     return this.userService.findAll();
   }
