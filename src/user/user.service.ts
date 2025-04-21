@@ -18,7 +18,7 @@ export class UserService {
         data: null,
       };
     }
-    console.log(users);
+    // console.log(users);
     return {
       statusCode: HttpStatus.OK,
       message: 'Users retrieved successfully',
