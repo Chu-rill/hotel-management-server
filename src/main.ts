@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api/v1');
   const limiter = rateLimit({
-    max: 100, // 100 requests
+    max: 10000, // 100 requests
     windowMs: 60 * 60 * 1000, // 1 hour
     message:
       'We have received too many requests from this IP. Please try again after one hour.',
@@ -18,7 +18,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.enableCors({
-    origin: '*', // Your frontend URL, default to *
+    origin: 'http://localhost:5173', // Your frontend URL, default to *
     methods: '*',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: false,
