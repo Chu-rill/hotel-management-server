@@ -18,7 +18,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.enableCors({
-    origin: 'https://hotel-management-client-kappa.vercel.app', // Your frontend URL, default to *
+    origin: '*', // Your frontend URL, default to *
     methods: '*',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: false,
