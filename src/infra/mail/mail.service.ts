@@ -11,6 +11,7 @@ import { BookingStatus, RoomType } from '@prisma/client';
 export class MailService {
   private transporter: nodemailer.Transporter;
   private welcomeTemplatePath: string;
+  private welcomeOauthTemplatePath: string;
   private bookingTemplatePath: string;
 
   constructor(private readonly configService: ConfigService) {
@@ -26,6 +27,10 @@ export class MailService {
     });
 
     this.welcomeTemplatePath = path.join(__dirname, '../../views/welcome.hbs');
+    this.welcomeOauthTemplatePath = path.join(
+      __dirname,
+      '../../views/welcome-oauth.hbs',
+    );
     this.bookingTemplatePath = path.join(__dirname, '../../views/booking.hbs');
   }
 
@@ -80,6 +85,36 @@ export class MailService {
           Username: data.username,
           title: 'Welcome Email',
           OTP: data.OTP,
+        }),
+      });
+
+      console.log(`Message sent: ${info.response}`);
+    } catch (error) {
+      console.error(
+        `Error sending email with template: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
+    }
+  }
+
+  //send an email with a template for OAuth
+  async sendOauthEmail(
+    email: string,
+    data: { subject: string; username: string },
+  ): Promise<void> {
+    try {
+      const templateSource = await this.readTemplateFile(
+        this.welcomeOauthTemplatePath,
+      );
+      const emailTemplate = handlebars.compile(templateSource);
+
+      const info = await this.transporter.sendMail({
+        from: this.configService.get<string>('EMAIL_USER'),
+        to: email,
+        subject: data.subject,
+        html: emailTemplate({
+          PlatformName: 'InnkeeperPro',
+          Username: data.username,
+          title: 'Welcome Email',
         }),
       });
 
