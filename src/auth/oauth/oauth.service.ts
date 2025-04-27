@@ -35,12 +35,13 @@ export class OauthService {
       );
       await this.userRepository.createCustomer(user.id);
       await this.userRepository.verifyUser(user.email);
+
+      const data = {
+        subject: 'InnkeeperPro validation',
+        username: user.username,
+      };
+      await this.mailService.sendOauthEmail(user.email, data);
     }
-    const data = {
-      subject: 'InnkeeperPro validation',
-      username: user.username,
-    };
-    await this.mailService.sendOauthEmail(user.email, data);
 
     const payload = { id: user.id, username: user.username, role: user.role };
     const token = await this.jwt.signAsync(payload);
